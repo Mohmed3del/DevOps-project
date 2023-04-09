@@ -1,4 +1,4 @@
-cat <<EOF > ../ansible/inventory
+cat <<EOF > ../Ansible/inventory
 [jenkins]
 $1
 EOF
