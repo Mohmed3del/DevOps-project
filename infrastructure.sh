@@ -15,8 +15,8 @@ apply|2)
 configure|3)
     terraform -chdir=./Terraform init \
     && terraform -chdir=./Terraform apply --auto-approve \
-    &&source ./Bash_Script/ip_inventory.sh \
-    &&source ./Bash_Script/config_ssh.sh \
+#     &&source ./Bash_Script/ip_inventory.sh \
+#     &&source ./Bash_Script/config_ssh.sh \
     && ansible-playbook ./Ansible/playbook ;break ;;	
     
 destroy|4)
