@@ -15,10 +15,16 @@ apply|2)
 configure|3)
     terraform -chdir=./Terraform init \
     && terraform -chdir=./Terraform apply --auto-approve \
+<<<<<<< HEAD
     &&source ./Bash_Script/ip_inventory.sh \
     &&source ./Bash_Script/config_ssh.sh \
     && cd Ansible/ \
     && ansible-playbook playbook.yml ;break ;;	
+=======
+#     &&source ./Bash_Script/ip_inventory.sh \
+#     &&source ./Bash_Script/config_ssh.sh \
+    && ansible-playbook ./Ansible/playbook ;break ;;	
+>>>>>>> refs/remotes/origin/main
     
 destroy|4)
 	terraform destroy --auto-approve;;
