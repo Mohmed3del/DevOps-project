@@ -1,6 +1,7 @@
 - name: Install and configure Jenkins
   hosts: jenkins
-  
+  gather_facts: no
+
   vars:
     - username: admin1
     - password: admin1
@@ -26,6 +27,9 @@
       apt:
         name: jenkins
         state: present
+      notify:
+        - Restart Jenkins
+        - Display Jenkins initial admin password
 
     - name: daemon-reload
       systemd:
@@ -43,41 +47,103 @@
         dest: /home/ec2-user
       register: cli_installed
 
-    # - name: Create Jenkins user
-    #   command:
-    #     cmd: 'echo ''jenkins.model.Jenkins.instance.securityRealm.createAccount("{{ username }}", "{{ password }}")'' | java -jar ./jenkins-cli.jar -s "http://localhost:8080" -auth admin:$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword) -noKeyAuth groovy = -'
-    #     chdir: /home/ubuntu
-    #     creates: /home/ubuntu/somedir/somelog.txt
-
-    
-
     - name: Get Jenkins initial admin password
       slurp:
         src: /var/lib/jenkins/secrets/initialAdminPassword
-      register: jenkins_initial_admin_password
+      register: jenkins_password
+      tags:
+        - print1
 
-    - name: Set Jenkins initial admin password
-      set_fact:
-        jenkins_initial_admin_password_decoded: "{{ jenkins_initial_admin_password['content'] | b64decode }}"
+    - name: Install Python PIP
+      apt:
+        name: python3-pip
+        state: latest
 
-    - name: Create Jenkins user
-      shell: echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("{{ username }}", "{{ password }}")' |java -jar ./jenkins-cli.jar -s "http://localhost:8080" -auth admin:$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword) -noKeyAuth groovy = –
-      args:
-        chdir: /home/ubuntu
-
-    - name: Install Suggested Plugins
-      jenkins_plugin:
-        name: suggested
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-        url_username: "{{ username }}"
-        url_password: "{{ password }}"
-        url: "http://localhost:8080"
-        headers:
-          Content-Type: "application/x-www-form-urlencoded"
-          Jenkins-Crumb: '{{ lookup(''url'', ''http://localhost:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'') }}'
-    
-    
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        state: latest
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: true
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Add remote "ubuntu" user to "docker" group
+      user:
+        name: "{{ item }}"
+        groups: "docker"
+        append: yes
+      loop:
+        - jenkins
+        - ubuntu
+
+    - name: open docker.sock to everyone
+      file:
+        path: /var/run/docker.sock
+        mode: 0760
+
+    - name: Install AWS CLI via PIP
+      pip:
+        name: awscli
+        state: present
+
+    - name: Add kubectl apt-key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add kubectl apt repository
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+        filename: kubernetes.list
+        update_cache: yes
+
+    - name: Install kubectl
+      apt:
+        name: kubectl
+        state: present
+
+    # - name: Allow port range 9000
+    #   ufw:
+    #     rule: allow
+    #     port: 9000
+    #     proto: tcp
+
+  handlers:
     - name: Restart Jenkins
       systemd:
         name: jenkins
-        state: restarted      
+        state: restarted
+
+    # - name: get admin pass
+    #   command: cat /var/lib/jenkins/secrets/initialAdminPassword
+    #   register: jenkins_password
+
+    # - name: print Jenkins initial admin password
+    #   debug:
+    #     msg: "{{ jenkins_password.stdout }}"
+    #   tags:
+    #     - print
+
+    - name: Display Jenkins initial admin password
+      debug:
+        msg: "{{ jenkins_password1['content'] | b64decode }}"
+      tags:
+        - print1
