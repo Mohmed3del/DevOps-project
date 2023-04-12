@@ -5,7 +5,7 @@ resource "aws_eks_node_group" "node" {
   subnet_ids      = [var.public1_subnetcidr, var.private1_subnetcidr]
 
   disk_size      = 10
-  instance_types = ["t2.small"]
+  instance_types = ["t3.small"]
   ami_type       = "AL2_x86_64"
 
 
