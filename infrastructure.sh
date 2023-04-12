@@ -15,7 +15,6 @@ apply|2)
 configure|3)
     terraform -chdir=./Terraform init \
     && terraform -chdir=./Terraform apply --auto-approve \
-<<<<<<< HEAD
     # &&source ./Bash_Script/ip_inventory.sh \
     # &&source ./Bash_Script/config_ssh.sh \
     && cd Ansible/ \
