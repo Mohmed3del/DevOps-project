@@ -1,141 +1,11 @@
 - name: Install and configure Jenkins
   hosts: jenkins
   gather_facts: no
-
-  vars:
-    - username: admin1
-    - password: admin1
+  roles:
+    - jenkins
+    - docker-aws
 
   tasks:
-    - name: Add Jenkins GPG key
-      ansible.builtin.get_url:
-        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-        validate_certs: no
-        dest: /usr/share/keyrings/jenkins-keyring.asc
-
-    - name: Add Jenkins repository
-      apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/"
-        state: present
-
-    - name: Install Java
-      apt:
-        name: openjdk-11-jdk
-        state: present
-
-    - name: Install Jenkins
-      apt:
-        name: jenkins
-        state: present
-      notify:
-        - Restart Jenkins
-        - Display Jenkins initial admin password
-
-    - name: daemon-reload
-      systemd:
-        daemon_reload: true
-
-    - name: Start and enable Jenkins service
-      systemd:
-        name: jenkins
-        state: started
-        enabled: yes
-
-    - name: Download Jenkins CLI jar
-      get_url:
-        url: http://localhost:8080/jnlpJars/jenkins-cli.jar
-        dest: /home/ec2-user
-      register: cli_installed
-
-    - name: Get Jenkins initial admin password
-      slurp:
-        src: /var/lib/jenkins/secrets/initialAdminPassword
-      register: jenkins_password
-      tags:
-        - print1
-
-    - name: Install Python PIP
-      apt:
-        name: python3-pip
-        state: latest
-
-    - name: Add Docker GPG apt Key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker Repository
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu focal stable
-        state: present
-
-    - name: Update apt packages
-      apt:
-        update_cache: yes
-        state: latest
-
-    - name: Update apt and install docker-ce
-      apt:
-        name: "{{ item }}"
-        state: latest
-        update_cache: true
-      loop:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
-
-    - name: Add remote "ubuntu" user to "docker" group
-      user:
-        name: "{{ item }}"
-        groups: "docker"
-        append: yes
-      loop:
-        - jenkins
-        - ubuntu
-
-    - name: open docker.sock to everyone
-      file:
-        path: /var/run/docker.sock
-        mode: 0760
-
-    - name: Install AWS CLI via PIP
-      pip:
-        name: awscli
-        state: present
-
-    - name: Add kubectl apt-key
-      apt_key:
-        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-        state: present
-
-    - name: Add kubectl apt repository
-      apt_repository:
-        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
-        state: present
-        filename: kubernetes.list
-        update_cache: yes
-
-    - name: Install kubectl
-      apt:
-        name: kubectl
-        state: present
-
-    # - name: Allow port range 9000
-    #   ufw:
-    #     rule: allow
-    #     port: 9000
-    #     proto: tcp
-
-  handlers:
-    - name: Restart Jenkins
-      systemd:
-        name: jenkins
-        state: restarted
-
-    # - name: get admin pass
-    #   command: cat /var/lib/jenkins/secrets/initialAdminPassword
-    #   register: jenkins_password
-
     # - name: print Jenkins initial admin password
     #   debug:
     #     msg: "{{ jenkins_password.stdout }}"
@@ -144,6 +14,6 @@
 
     - name: Display Jenkins initial admin password
       debug:
-        msg: "{{ jenkins_password1['content'] | b64decode }}"
+        msg: "{{ jenkins_password['content'] | b64decode }}"
       tags:
         - print1
