@@ -1,13 +1,10 @@
 output "eip" {
-  value = module.vid.e_ip
+  value = module.network.e_ip
 
 }
 output "natg" {
-  value = module.vid.nat
+  value = module.network.nat
 
 }
-output "sp1" {
-  value = module.vid.subentpb1
 
-}
 

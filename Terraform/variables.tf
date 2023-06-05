@@ -1,95 +1,55 @@
-variable "cidr" {
-  type = string
-
-}
-
-
 variable "Name" {
   type = string
-
-}
-variable "Name1" {
-  type = string
-
 }
 
-variable "public1_subnetcidr" {
-  type = string
-
-}
-variable "public2_subnetcidr" {
-  type = string
-
-}
-variable "private1_subnetcidr" {
-  type = string
-
-}
-variable "private2_subnetcidr" {
-  type = string
-
-}
-
-
-variable "AZ1" {
-  type = string
-
-}
-
-variable "AZ2" {
-  type = string
-
-}
 variable "region" {
   type = string
-
+}
+variable "vpcid" {
+  type = string
+}
+variable "my_ip" {
+  type = string
+}
+variable "IPS" {
+  type = string
+}
+variable "public1" {
+  type = object({
+    cidr = string
+  })
+}
+variable "public2" {
+  type = object({
+    cidr = string
+  })
+}
+variable "private1" {
+  type = object({
+    cidr = string
+  })
+}
+variable "private2" {
+  type = object({
+    cidr = string
+  })
+}
+#worker nodes
+variable "instance_types" {
+  type = list(string)
 }
 
-variable "ami" {
-  type = string
-
-}
-
-variable "instancetype" {
-  type = string
-
+variable "scaling_config" {
+  type = object({
+    desired_size = number
+    max_size     = number
+    min_size     = number
+  })
 }
 variable "key_pair" {
-
   type = string
-
-
-}
-variable "key_count" {
-
-  type = number
-
-
-}
-# variable "pass" {
-
-#   type = string
-
-
-# }
-
-
-
-
-
-
-
-variable "nodes_desired_size" {
-  type = number
 }
 
-variable "nodes_max_size" {
-  type = number
-}
-
-variable "nodes_min_size" {
-  type = number
-}
 
 
 

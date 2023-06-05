@@ -4,10 +4,10 @@ resource "aws_eks_cluster" "aws_eks" {
 
 
   vpc_config {
-    subnet_ids              = [var.public1_subnetcidr, var.private1_subnetcidr]
+    subnet_ids              = var.subnet_list
     endpoint_private_access = true
 
-    security_group_ids = [aws_security_group.eks_sg.id]
+    # security_group_ids = [aws_security_group.eks_sg.id]
   }
 
   tags = {
@@ -17,5 +17,6 @@ resource "aws_eks_cluster" "aws_eks" {
   depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.AmazonEKSServicePolicy
+
   ]
 }
