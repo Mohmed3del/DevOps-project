@@ -1,0 +1,6 @@
+---
+# defaults file for roles/sonar
+sonarqube_version: "9.9.0.65466"
+sonarqube_download_url: "https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-{{ sonarqube_version }}.zip"
+sonar_user: sonar
+sonar_group: sonar

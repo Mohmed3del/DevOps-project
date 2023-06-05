@@ -1,0 +1,6 @@
+---
+# vars file for roles/nexus
+nexus_version: 3.51.0-01
+download_url: https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-{{ nexus_version }}-unix.tar.gz
+user: nexus
+group: nexus

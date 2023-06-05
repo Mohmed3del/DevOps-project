@@ -1,0 +1,131 @@
+---
+# tasks file for roles/nexus
+
+- name: update package
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    update_cache: true
+
+- name: Install system packages required by Nexus
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - openjdk-8-jdk
+
+- name: Download and extract Nexus package
+  get_url:
+    url: "{{ download_url }}"
+    dest: /tmp/nexus.tar.gz
+  register: download
+
+- name: Create Nexus system user
+  user:
+    name: "{{ user }}"
+    home: /opt/nexus
+    state: present
+
+- name: Extract Nexus package to installation directory
+  unarchive:
+    src: /tmp/nexus.tar.gz
+    dest: /opt
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    remote_src: yes
+  when: download.changed
+  register: check_file_name
+
+- name: change name to Nexus Directory
+  copy:
+    src: "/opt/nexus-{{ nexus_version }}/"
+    dest: /opt/nexus/
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0755
+    remote_src: yes
+  when: check_file_name.changed
+
+- name: Remove old directory
+  ansible.builtin.file:
+    path: "/opt/nexus-{{ nexus_version }}/"
+    state: absent
+
+- name: Set owner and group for /opt/nexus directory
+  file:
+    path: /opt/nexus
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: yes
+
+- name: Set owner and group for /opt/sonatype-work directory
+  file:
+    path: /opt/sonatype-work
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: yes
+
+- name: Edit the nexus script file
+  lineinfile:
+    path: /opt/nexus/bin/nexus.rc
+    regex: "^#run_as_user"
+    line: 'run_as_user="nexus"'
+    backrefs: true
+
+- name: Edit the security limits
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "{{ item }}"
+  loop:
+    - "nexus - nofile 65536"
+
+- name: Configure nexus vmoptions
+  lineinfile:
+    path: /opt/nexus/bin/nexus.vmoptions
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+    backrefs: yes
+  loop:
+    - { regex: "^-Xms2703m", line: "-Xms512m" }
+    - { regex: "^-Xmx2703m", line: "-Xmx512m" }
+    - {
+        regex: "^-XX:MaxDirectMemorySize=2703m",
+        line: "-XX:MaxDirectMemorySize=512m",
+      }
+  notify:
+    - Restart Nexus Service
+
+- name: Configure nexus service
+  template:
+    src: nexus.service.j2
+    dest: /etc/systemd/system/nexus.service
+  notify:
+    - Restart Nexus Service
+
+- name: Reload systemd daemon
+  systemd:
+    name: ""
+    state: reloaded
+
+- name: Enable Nexus
+  ansible.builtin.systemd:
+    name: nexus
+    state: started
+    enabled: true
+    daemon_reload: yes
+
+- name: Check if admin.password file exists
+  stat:
+    path: /opt/sonatype-work/nexus3/admin.password
+  register: admin_password_stat
+
+- name: Get Nexus admin password
+  slurp:
+    src: /opt/sonatype-work/nexus3/admin.password
+  register: nexus_password
+  when: admin_password_stat.stat.exists
+
+- name: Print Nexus password
+  debug:
+    var: nexus_password.content | b64decode
+  when: admin_password_stat.stat.exists

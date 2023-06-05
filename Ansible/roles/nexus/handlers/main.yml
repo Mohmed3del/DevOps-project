@@ -1,0 +1,7 @@
+---
+# handlers file for roles/nexus
+- name: Restart Nexus Service
+  systemd:
+    name: nexus
+    state: restarted
+    daemon_reload: yes
