@@ -63,9 +63,9 @@ module "jenkins" {
   #Security Group
   sg_name = "jenkins_security_group"
   sg_rules = {
-    "port 22"    = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = [var.my_ip] }
-    "port 8080"  = { type = "ingress", port = "8080", protocol = "tcp", cidr_blocks = [var.IPS] }
-    "egress all" = { type = "egress", port = "0", protocol = "-1", cidr_blocks = [var.IPS] }
+    "ssh port"     = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = [var.my_ip] }
+    "jenkins port" = { type = "ingress", port = "8080", protocol = "tcp", cidr_blocks = [var.IPS] }
+    "egress all"   = { type = "egress", port = "0", protocol = "-1", cidr_blocks = [var.IPS] }
   }
 }
 
