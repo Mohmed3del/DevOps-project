@@ -1,12 +1,20 @@
-# Specify the base image for the go app.
+# use official Golang image
 FROM golang:1.20
-# Specify that we now need to execute any commands in this directory.
+
+# set working directory
 WORKDIR /app
-# Copy everything from this project into the filesystem of the container.
-COPY . .
-# Obtain the package needed to run redis commands. Alternatively use GO Modules.
-RUN go get -u app/
-# Compile the binary exe for our app.
+
+# Copy the source code
+COPY . . 
+
+# Download and install the dependencies
+RUN go get -d -v ./...
+
+# Build the Go app
 RUN go build -o main .
-# Start the application.
+
+#EXPOSE the port
+EXPOSE 9090
+
+# Run the executable
 CMD ["./main"]
