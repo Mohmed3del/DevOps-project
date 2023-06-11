@@ -36,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage('Sonarqube Guality Gate') {
+        stage('Sonarqube Quality Gate') {
             steps {
                 script{
                     timeout(time: 1, unit: 'HOUR') {
