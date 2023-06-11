@@ -39,7 +39,7 @@ pipeline {
         stage('Sonarqube Guality Gate') {
             steps {
                 script{
-                    timeout(time: 10, unit: 'MINUTES') {
+                    timeout(time: 1, unit: 'HOUR') {
                         waitForQualityGate abortPipeline: true
                 }
             }
