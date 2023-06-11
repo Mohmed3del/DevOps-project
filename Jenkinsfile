@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+        MYSQL_USER = 'myuser'
+        MYSQL_PASS = 'mypassword'
+        MYSQL_HOST = 'localhost'
+        MYSQL_PORT = '3306'
+    }
     tools { go 'go' } 
     stages {
         stage('Checkout') {
