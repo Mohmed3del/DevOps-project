@@ -3,10 +3,10 @@ kind: Ingress
 metadata:
   name: go-app-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: example.com
+    - host: go-app.com
       http:
         paths:
           - path: /go-app/(.*)
@@ -15,4 +15,4 @@ spec:
               service:
                 name: go-app
                 port:
-                  name: http
+                  number: 9090
