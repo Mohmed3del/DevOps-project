@@ -1,11 +1,11 @@
 # use official Golang image
-FROM golang:1.20
+FROM golang:1.20.5-alpine
 
 # set working directory
 WORKDIR /app
 
 # Copy the source code
-COPY . . 
+COPY . .
 
 # Download and install the dependencies
 RUN go get -d -v ./...
