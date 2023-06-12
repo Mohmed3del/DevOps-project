@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-argo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Mohmed3del/Demo-DevOps-project.git
+    targetRevision: K8S_argoCD
+    path: k8s/app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: app
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true #to create a NameSpace if it doesn't exist
+
+    automated:
+      selfHeal: true # automaticaly sync between git repo and desired state
+      prune: true # clean resources from the k8s that're not in git repo
