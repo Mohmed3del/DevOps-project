@@ -35,22 +35,20 @@ pipeline {
             }
         }
 
-        
+        stage('Code Analysis') {
             
-        stage('Sonarqube Analysis') {
-        environment {
-            scannerHome = tool 'sonarscanner'
-        }
-        steps {
-            script {
-                    withSonarQubeEnv('sonarqube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                    if ("${json.projectStatus.status}" == "ERROR") {
-                        currentBuild.result = 'FAILURE'
-                        error('Pipeline aborted due to quality gate failure.')
-                    }
+            steps {
+                script {
+                    scannerHome = tool 'sonarscanner'
                 }
+                // Run the SonarScanner to analyze the code
+                withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+                if ("${json.projectStatus.status}" == "ERROR") {
+                            currentBuild.result = 'FAILURE'
+                            error('Pipeline aborted due to quality gate failure.')
+                    }
             }
         }
 
