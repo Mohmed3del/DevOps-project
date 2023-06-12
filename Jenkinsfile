@@ -1,6 +1,10 @@
 pipeline {
     agent any
-    
+
+
+    tools{
+        go 'go'
+    }
     environment {
         ECR_REGISTRY = "889149267524.dkr.ecr.eu-central-1.amazonaws.com"
         IMAGE_NAME = "go-app"
@@ -12,6 +16,22 @@ pipeline {
             steps {
                 // Check out the source code from Git
                 git branch: 'main', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
+            }
+        }
+        stage('Build Code') {
+            steps {
+                // Change to the app directory before building
+                dir('app') {
+                    sh 'go build -v ./...'
+                }
+            }
+        }
+        stage('Test Code') {
+            steps {
+                // Change to the app directory before testing
+                dir('app') {
+                    sh 'go test -v ./...'
+                }
             }
         }
 
@@ -42,7 +62,7 @@ pipeline {
         //     }
         // }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
                 sh "docker build -t $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME ./app"
             }
