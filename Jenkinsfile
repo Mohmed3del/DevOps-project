@@ -28,6 +28,16 @@ pipeline {
             }
         }
 
+        stage('Sonarqube Quality Gate') {
+            steps {
+                script{
+                    timeout(time: 1, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 sh "docker build -t $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME ./app"
