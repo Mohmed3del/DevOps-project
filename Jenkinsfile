@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    // environment {
-    //     MYSQL_USER = 'myuser'
-    //     MYSQL_PASS = 'mypassword'
-    //     MYSQL_HOST = 'localhost'
-    //     MYSQL_PORT = '3306'
-    // }
-    tools { go 'go' } 
+    
+    environment {
+        ECR_REGISTRY = "889149267524.dkr.ecr.eu-central-1.amazonaws.com"
+        IMAGE_NAME = "go-app"
+        TAG_NAME = "latest"
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -14,22 +14,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
             }
         }
-        // stage('Build') {
-        //     steps {
-        //         // Change to the app directory before building
-        //         dir('app') {
-        //             sh 'go build -v ./...'
-        //         }
-        //     }
-        // }
-        // stage('Test') {
-        //     steps {
-        //         // Change to the app directory before testing
-        //         dir('app') {
-        //             sh 'go test -v ./...'
-        //         }
-        //     }
-        // }
+
         stage('Code Analysis') {
             
             steps {
@@ -42,12 +27,31 @@ pipeline {
                 }
             }
         }
-        stage('Sonarqube Quality Gate') {
+
+        stage('Build') {
             steps {
-                script{
-                    timeout(time: 1, unit: 'MINUTES') {
-                        waitForQualityGate abortPipeline: true
-                    }
+                sh "docker build -t $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME ./app"
+            }
+        }
+        stage('ECR Login') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws_ecr',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
+                    sh "aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY/$IMAGE_NAME"
+                }
+            }
+        }
+        stage('Push to ECR') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws_ecr',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
+                    sh "docker push $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME"
                 }
             }
         }
