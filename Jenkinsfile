@@ -12,6 +12,11 @@ pipeline {
     }
     
     stages {
+        stage('Clean workspace'){
+            steps{
+                cleanWs()
+            }
+        }
         stage('Checkout') {
             steps {
                 // Check out the source code from Git
@@ -88,6 +93,14 @@ pipeline {
                     sh "docker push $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME"
                 }
             }
+        }
+    }
+    post{
+        failure{
+            slackSend (channel:"jenkins", color:"#FF0000", message:"FAILED: job '${JOB_NAME} [${BUILD_ID}]' (${BUILD_URL})")
+        }
+        success{
+            slackSend (channel:"jenkins", color:"#00FF00", message:"SUCCEEDED: job '${JOB_NAME} [${BUILD_ID}]' (${BUILD_URL})")
         }
     }
 }
