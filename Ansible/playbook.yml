@@ -1,0 +1,19 @@
+- name: Install and configure Jenkins
+  hosts: jenkins
+  gather_facts: no
+  roles:
+    - jenkins
+    - docker-aws
+
+  tasks:
+    # - name: print Jenkins initial admin password
+    #   debug:
+    #     msg: "{{ jenkins_password.stdout }}"
+    #   tags:
+    #     - print
+
+    - name: Display Jenkins initial admin password
+      debug:
+        msg: "{{ jenkins_password['content'] | b64decode }}"
+      tags:
+        - print1

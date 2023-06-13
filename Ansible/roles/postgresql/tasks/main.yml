@@ -1,0 +1,61 @@
+# tasks file for roles/postgresql
+- name: update packges
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: install postgresql
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  register: postgresql_db
+  loop:
+    - "postgresql-{{ postgres_version }}"
+    - postgresql-contrib
+    - python3-pip
+
+- name: Install psycopg2 using pip
+  ansible.builtin.pip:
+    name:
+      - psycopg2-binary
+    state: present
+    executable: pip3
+
+- name: start postgresql service
+  ansible.builtin.systemd:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: Change  Authentication for create user
+  lineinfile:
+    path: "/etc/postgresql/{{ postgres_version }}/main/pg_hba.conf"
+    regex: "^local.*postgres.*peer$"
+    line: "local   all     postgres     trust"
+    backrefs: true
+  register: authentication
+
+- name: Restart postgresql service when update configuration
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+    enabled: true
+  when: authentication.changed
+
+- name: create user postgresql
+  ansible.builtin.postgresql_user:
+    name: "{{ sonarqube_user }}"
+    password: "{{ sonarqube_password }}"
+    state: present
+
+- name: create database postgresql
+  ansible.builtin.postgresql_db:
+    name: "{{ sonarqube_database }}"
+    state: present
+
+- name: Grant ALL the privileges on  database to user
+  postgresql_privs:
+    type: database
+    database: "{{ sonarqube_database }}"
+    roles: "{{ sonarqube_user }}"
+    privs: ALL
+    state: present

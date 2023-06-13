@@ -1,0 +1,8 @@
+---
+# vars file for roles/sonar
+mysql_host: localhost
+mysql_port: 3306
+sonarqube_database: sonarqube
+sonarqube_user: sonar
+sonarqube_password: sonar
+sonarqube_dir: /opt/sonarqube

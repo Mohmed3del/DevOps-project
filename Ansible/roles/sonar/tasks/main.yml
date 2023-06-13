@@ -1,0 +1,138 @@
+---
+# tasks file for roles/sonar
+- name: update package
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install system packages required by SonarQube
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - openjdk-17-jdk
+    - unzip
+
+- name: Download and extract SonarQube package
+  get_url:
+    url: "{{ sonarqube_download_url }}"
+    dest: /tmp/sonarqube.zip
+  register: download_sonarqube
+
+- name: Create SonarQube system user
+  user:
+    name: "{{ sonar_user }}"
+    home: /opt/sonarqube
+    shell: "/sbin/nologin"
+    comment: "SonarQube System user"
+    state: present
+
+- name: Extract SonarQube package to installation directory
+  unarchive:
+    src: /tmp/sonarqube.zip
+    dest: /opt
+    owner: "{{ sonar_user }}"
+    group: "{{ sonar_group }}"
+    remote_src: yes
+  when: download_sonarqube.changed
+  register: check_file_name
+
+- name: change name to sonarqube
+  copy:
+    src: "/opt/sonarqube-{{ sonarqube_version }}/"
+    dest: /opt/sonarqube/
+    owner: "{{ sonar_user }}"
+    group: "{{ sonar_group }}"
+    mode: 0755
+    remote_src: yes
+  when: check_file_name.changed
+
+- name: Remove old directory
+  ansible.builtin.file:
+    path: "/opt/sonarqube-{{ sonarqube_version }}/"
+    state: absent
+  when: check_file_name.changed
+
+- name: Configure SonarQube properties file
+  template:
+    src: sonar.properties.j2
+    dest: /opt/sonarqube/conf/sonar.properties
+    owner: "{{ sonar_user }}"
+    group: "{{ sonar_group }}"
+    mode: 0755
+  when: check_file_name.changed
+  notify:
+    - Restart SonarQube Service
+
+- name: Edit the sonar script file
+  lineinfile:
+    dest: /opt/sonarqube/bin/linux-x86-64/sonar.sh
+    regex: "^#RUN_AS_USER="
+    line: RUN_AS_USER=sonar
+    backrefs: yes
+  when: check_file_name.changed
+
+- name: Edit the security limits
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "{{ item }}"
+  loop:
+    - "sonarqube   -   nofile   131072"
+    - "sonarqube   -   nproc    8192"
+  notify:
+    - Restart SonarQube Service
+
+- name: Configure SonarQube service
+  template:
+    src: sonarqube.service.j2
+    dest: /etc/systemd/system/sonarqube.service
+  notify:
+    - Restart SonarQube Service
+
+# - name: Configure SonarQube
+#   lineinfile:
+#     path: /opt/sonarqube/conf/sonar.properties
+#     regexp: "{{ item.regex }}"
+#     line: "{{ item.line }}"
+#     backrefs: yes
+#     loop:
+#       - { regex: "^#sonar.jdbc.username=", line: "sonar.jdbc.username=sonar" }
+#       - { regex: "^#sonar.jdbc.password=", line: "sonar.jdbc.password=sonar" }
+
+# - name: Edit the security limits
+#   lineinfile:
+#     dest: /opt/sonarqube/conf/sonar.properties
+#     line: "{{ item }}"
+#   loop:
+#     - sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
+#     - sonar.web.host=0.0.0.0
+
+- name: Enable sonarqube
+  ansible.builtin.systemd:
+    name: sonarqube
+    state: started
+    enabled: true
+    daemon_reload: yes
+
+- name: increase virtual memory
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+
+    value: "524288"
+    state: present
+
+- name: increase virtual
+  ansible.posix.sysctl:
+    name: fs.file-max
+    value: "131072"
+    state: present
+
+    #To Set vm.max_map_count permanently
+- name: increase virtual memory in sysctl configuration permanently
+  lineinfile:
+    dest: /etc/sysctl.conf
+    line: "{{ item }}"
+  loop:
+    - { "vm.max_map_count=524288" }
+    - { "fs.file-max=131072" }
+    - { "ulimit -n 131072" }
+    - { "ulimit -u 8192" }

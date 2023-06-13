@@ -1,0 +1,33 @@
+---
+# vars file for roles/jenkins
+username: admin
+password: admin
+plugin:
+  - pipeline
+  - git
+  - credentials
+  - ssh
+  - email-ext
+  - junit
+  - ant
+  - maven
+  # - docker-plugin
+  - sonar
+  - sonar-scanner
+  - slack
+  # - nexus-artifact-uploader
+  - git-client
+  - git-server
+  - github
+  - github-api
+  - github-branch-source
+  - pipeline-github-lib
+  - pipeline-graph-analysis
+  - pipeline-input-step
+  - ssh-credentials
+  - ssh-slaves
+  - sshd
+  - cloudbees-folder
+  - aws-credentials
+  - amazon-ecr
+  - docker-workflow
