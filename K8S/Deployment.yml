@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
         - name: go-app
-          image: go_app:v1.0
+          image: 889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:v1.0
           env:
             - name: MYSQL_HOST
               value: mysql
