@@ -24,9 +24,9 @@ plugin:
   - pipeline-github-lib
   - pipeline-graph-analysis
   - pipeline-input-step
-  - ssh-credentials
-  - ssh-slaves
-  - sshd
+  # - ssh-credentials
+  # - ssh-slaves
+  # - sshd
   - cloudbees-folder
   - aws-credentials
   - amazon-ecr
