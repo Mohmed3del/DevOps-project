@@ -23,7 +23,7 @@ pipeline {
 
         stage('Kubectl'){
         steps {
-            withCredentials([usernamePassword(credentialsId: "aws", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+            withCredentials([usernamePassword(credentialsId: "aws-creds-id", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                 sh " aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster"
             }
         }
@@ -56,7 +56,7 @@ pipeline {
         stage('Install ArgoCD ') {
             steps {
             withCredentials([
-            usernamePassword(credentialsId: "aws",
+            usernamePassword(credentialsId: "aws-creds-id",
             usernameVariable: 'AWS_ACCESS_KEY_ID',
             passwordVariable: 'AWS_SECRET_ACCESS_KEY')])
                 script {
