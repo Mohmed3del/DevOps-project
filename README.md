@@ -59,7 +59,7 @@ cd Demo-DevOps_project
 bash inrasturucture.sh
 ```
 
-Enter number 4 to Build and Configure Inrastructure in AWS
+Enter number 3 to Build and Configure Inrastructure in AWS
 
 #### on Jenkins:
 
