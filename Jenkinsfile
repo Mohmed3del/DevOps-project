@@ -8,7 +8,7 @@ pipeline {
     environment {
         ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
         IMAGE_NAME = "go_app"
-        TAG_NAME = "${env.BUILD_NUMBER}"
+        // TAG_NAME = "${env.BUILD_NUMBER}"
     }
     
     stages {
@@ -76,7 +76,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME ./app"
+                sh "docker build -t $ECR_REGISTRY/$IMAGE_NAME:$BUILD_NUMBER ./app"
             }
         }
         stage('ECR Login') {
