@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
         - name: go-app
-          image: <image-name>
+          image: go_app:v1.0
           env:
             - name: MYSQL_HOST
               value: mysql
