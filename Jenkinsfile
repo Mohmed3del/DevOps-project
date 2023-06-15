@@ -58,7 +58,7 @@ pipeline {
         //         }
         //     }
         // }    
-        stage('Install ArgoCD ') {
+        stage('Install ArgoCD, Prometheus, Grafana, and Nginx controller ') {
             steps {
             withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
@@ -76,27 +76,17 @@ pipeline {
                             kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
                             kubectl create namespace app
                             kubectl apply -f argo.yml
+                            helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+                            helm repo add nginx-stable https://helm.nginx.com/stable
+                            helm repo update
+                            helm install prometheus prometheus-community/prometheus
+                            helm install my-release nginx-stable/nginx-ingress
                             """
                         }
                     }
                 }
             }
         }
-        stage('Install Prometheus, Grafana, and Nginx controller') {
-            when {
-                expression { sh(script: 'kubectl get namespace argocd', returnStatus: true) == 0 }
-            }
-            steps {
-                script {
-                    sh """
-                        helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-                        helm repo add nginx-stable https://helm.nginx.com/stable
-                        helm repo update
-                        helm install prometheus prometheus-community/prometheus
-                        helm install my-release nginx-stable/nginx-ingress
-                    """
-                }
-            }
-        }
+        
     }
 }
