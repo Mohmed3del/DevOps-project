@@ -6,8 +6,8 @@ pipeline {
         go 'go'
     }
     environment {
-        ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
-        IMAGE_NAME = "go_app"
+        ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app"
+        // IMAGE_NAME = "go_app"
         // TAG_NAME = "${env.BUILD_NUMBER}"
     }
     
@@ -76,7 +76,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $ECR_REGISTRY/$IMAGE_NAME:$BUILD_NUMBER ./app"
+                sh "docker build -t $ECR_REGISTRY:$BUILD_NUMBER ./app"
             }
         }
         stage('ECR Login') {
@@ -87,7 +87,7 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                         script {
-                            sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY/$IMAGE_NAME"
+                            sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY"
                 }
             }
         }
@@ -101,7 +101,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
                         script {
 
-                            sh "docker push $ECR_REGISTRY/$IMAGE_NAME:$TAG_NAME"
+                            sh "docker push $ECR_REGISTRY:$BUILD_NUMBER"
                     }
                 }
             }
