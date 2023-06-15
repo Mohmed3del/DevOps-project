@@ -37,10 +37,11 @@ pipeline {
                 
                     sh """
                         cat K8S/Deployment.yml
-                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${BUILD_NUMBER}/g' K8S/Deployment.yml
+                        sed -i 's#${APP_NAME}.*#${APP_NAME}:${BUILD_NUMBER}#g' K8S/Deployment.yml
                         cat K8S/Deployment.yml
                     """
                 }
+                // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
             }
         
         stage("Push the changed deployment file to Git") {
