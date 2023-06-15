@@ -52,7 +52,7 @@ Clone the forked repository to your local machine using the following command:
 git clone https://github.com/<your-username>/Demo-DevOps_project.git
 ```
 
-change the working directory to the cloned repo then run the python script to build the infrastructure
+change the working directory to the cloned repo then run the Bash script to build the infrastructure
 
 ```
 cd Demo-DevOps_project
@@ -61,11 +61,8 @@ bash inrasturucture.sh
 
 Enter number 4 to Build and Configure Inrastructure in AWS
 
-#### Example of the python output:
-
 #### on Jenkins:
 
-- sign in using the password that the python script outputed
 - Create Credentials:
   - awslogin => type: username with password
   - githublogin => type: ssh username with privatekey
@@ -76,7 +73,7 @@ Enter number 4 to Build and Configure Inrastructure in AWS
 - Configure System:
   - Slack => Workspace: the workspace that has Jenkins CI , Credential: slacktoken , Default channel: the channel selected for Jenkins CI
   - SonarQube servers => check mark "Environment variables" , Name: sonarserver , Server URL: http://{your sonarqube server ip}:9000 , Server authentication token: sonartoken
-- Create Pipeline and check mark "GitHub hook trigger for GITScm polling", choose the pipeline to be from SCM, then fork my repo branch ci and use it as Repository URL
+- Create Pipeline and check mark "GitHub hook trigger for GITScm polling", choose the pipeline to be from SCM, then fork my repo branch jenkins_CI and use it as Repository URL
 
 #### run the pipeline manauly, it will abort due to a SonarQube webhook not being configured
 
