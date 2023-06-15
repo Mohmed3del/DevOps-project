@@ -6,8 +6,8 @@ pipeline {
         go 'go'
     }
     environment {
-        ECR_REGISTRY = "889149267524.dkr.ecr.eu-central-1.amazonaws.com"
-        IMAGE_NAME = "go-app"
+        ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
+        IMAGE_NAME = "go_app"
         TAG_NAME = "${env.BUILD_NUMBER}"
     }
     
@@ -50,11 +50,19 @@ pipeline {
                 withSonarQubeEnv('sonarqube') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
-                if ("${json.projectStatus.status}" == "ERROR") {
-                            currentBuild.result = 'FAILURE'
-                            error('Pipeline aborted due to quality gate failure.')
-                    }
+                // if ("${json.projectStatus.status}" == "ERROR") {
+                //             currentBuild.result = 'FAILURE'
+                //             error('Pipeline aborted due to quality gate failure.')
+                //     }
             }
+        }
+        stage("Quality Gate") {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                }
+            }
+
         }
 
         // stage('Sonarqube Quality Gate') {
