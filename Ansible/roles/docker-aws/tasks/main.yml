@@ -5,6 +5,7 @@
     name: python3-pip
     state: latest
 
+# Install Docker
 - name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -44,11 +45,13 @@
     path: /var/run/docker.sock
     mode: 0760
 
+# Install AWS CLI
 - name: Install AWS CLI via PIP
   pip:
     name: awscli
     state: present
 
+#  Istall Kubectl to connect with cluster
 - name: Add kubectl apt-key
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -65,3 +68,18 @@
   apt:
     name: kubectl
     state: present
+
+# Install latest version if helm_version is not specified
+- name: Download Helm command line tool
+  ansible.builtin.uri:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    return_content: true
+  register: helm_installer
+
+- name: Install Helm
+  ansible.builtin.command:
+    cmd: bash
+    stdin: "{{ helm_installer.content }}"
+    creates: /usr/local/bin/helm
+  environment:
+    DESIRED_VERSION: "{{ helm_version | default('') }}"

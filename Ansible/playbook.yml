@@ -5,15 +5,9 @@
     - jenkins
     - docker-aws
 
-  tasks:
-    # - name: print Jenkins initial admin password
-    #   debug:
-    #     msg: "{{ jenkins_password.stdout }}"
-    #   tags:
-    #     - print
-
-    - name: Display Jenkins initial admin password
-      debug:
-        msg: "{{ jenkins_password['content'] | b64decode }}"
-      tags:
-        - print1
+- name: Install and configure sonarqube
+  hosts: sonarqube
+  gather_facts: no
+  roles:
+    - postgresql
+    - sonar
