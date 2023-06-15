@@ -63,9 +63,36 @@ module "jenkins" {
   #Security Group
   sg_name = "jenkins_security_group"
   sg_rules = {
-    "ssh port"     = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = [var.my_ip] }
+    "ssh port"     = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = ["${chomp(data.http.myip.body)}/32"] }
     "jenkins port" = { type = "ingress", port = "8080", protocol = "tcp", cidr_blocks = [var.IPS] }
     "egress all"   = { type = "egress", port = "0", protocol = "-1", cidr_blocks = [var.IPS] }
+  }
+}
+
+module "sonarqube" {
+  source = "./Modules/EC2"
+  Name   = var.Name
+
+  vpc_id = module.network.vpcid
+
+  #EC2
+  EC2_Name = "sonarqube"
+  instance_ami = {
+    name_ami = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    owners   = ["amazon"]
+  }
+  instance_type                = "t2.medium"
+  EBS_volume                   = 8
+  key_pair                     = var.key_pair
+  associate_map_public_address = true
+  ec2_subnet_id                = module.network.subnet_id["public1"]
+
+  #Security Group
+  sg_name = "jenkins_security_group"
+  sg_rules = {
+    "ssh port"       = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = ["${chomp(data.http.myip.body)}/32"] }
+    "sonarqube port" = { type = "ingress", port = "9000", protocol = "tcp", cidr_blocks = [var.IPS] }
+    "egress all"     = { type = "egress", port = "0", protocol = "-1", cidr_blocks = [var.IPS] }
   }
 }
 

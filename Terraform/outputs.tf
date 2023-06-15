@@ -8,3 +8,7 @@ output "natg" {
 }
 
 
+
+output "my_public_ip" {
+  value = data.http.myip.response_body
+}

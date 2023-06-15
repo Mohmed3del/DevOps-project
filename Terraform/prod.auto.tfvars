@@ -7,7 +7,6 @@ Name = "DevOps"
 
 
 key_pair = "DevOps"
-my_ip    = "192.168.35.2/32"
 vpcid    = "10.0.0.0/16"
 
 IPS = "0.0.0.0/0"
