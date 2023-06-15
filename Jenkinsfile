@@ -8,7 +8,7 @@ pipeline {
     environment {
         ECR_REGISTRY = "889149267524.dkr.ecr.eu-central-1.amazonaws.com"
         IMAGE_NAME = "go-app"
-        TAG_NAME = "latest"
+        TAG_NAME = "${env.BUILD_NUMBER}"
     }
     
     stages {
@@ -20,7 +20,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Check out the source code from Git
-                git branch: 'main', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
+                git branch: 'jenkins_CI', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
             }
         }
         stage('Build Code') {
