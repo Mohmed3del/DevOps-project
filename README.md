@@ -63,8 +63,6 @@ Enter number 4 to Build and Configure Inrastructure in AWS
 
 #### Example of the python output:
 
-![output](https://github.com/moe-Ali/DevOps_project/blob/main/screenshots/final.png)
-
 #### on Jenkins:
 
 - sign in using the password that the python script outputed
