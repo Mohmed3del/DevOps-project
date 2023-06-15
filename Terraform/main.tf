@@ -88,7 +88,7 @@ module "sonarqube" {
   ec2_subnet_id                = module.network.subnet_id["public1"]
 
   #Security Group
-  sg_name = "jenkins_security_group"
+  sg_name = "sonarqube_security_group"
   sg_rules = {
     "ssh port"       = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = ["${chomp(data.http.myip.body)}/32"] }
     "sonarqube port" = { type = "ingress", port = "9000", protocol = "tcp", cidr_blocks = [var.IPS] }

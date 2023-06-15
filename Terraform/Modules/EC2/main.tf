@@ -15,9 +15,7 @@ resource "aws_instance" "EC2_instance" {
   }
 
   provisioner "local-exec" {
-    command = <<EOF
-    echo [servers] > ../Ansible/inventory
-    echo ${self.tags_all["Name"]} ansible_host=${self.public_dns} ansible_user=ubuntu ansible_ssh_private_key_file=../keys/${var.key_pair}.pem >> ../Ansible/inventory
-    EOF
+    command = "echo ${self.tags_all["Name"]} ansible_host=${self.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=../keys/${var.key_pair}.pem >> ../Ansible/inventory"
   }
+
 }
