@@ -5,7 +5,7 @@ pipeline {
     URL= "github.com/Mohmed3del/Demo-DevOps-project.git"
     EMAIL = "mohmed.adel.188.2017@gmail.com"
     BRANCH = "K8S_argoCD"
-    APP_NAME = go_app
+    APP_NAME = "go_app"
   }
   stages {
     
@@ -14,14 +14,21 @@ pipeline {
                 cleanWs()
             }
         }
-    stage('Kubectl'){
+        stage('Checkout') {
+            steps {
+                // Check out the source code from Git
+                git branch: 'K8S_argoCD', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
+            }
+        }
+
+        stage('Kubectl'){
         steps {
             withCredentials([usernamePassword(credentialsId: "aws", usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                 sh " aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster"
             }
         }
     }
-    stage("Update the Deployment Tags") {
+        stage("Update the Deployment Tags") {
             steps {
                 
                     sh """
@@ -32,7 +39,7 @@ pipeline {
                 }
             }
         
-    stage("Push the changed deployment file to Git") {
+        stage("Push the changed deployment file to Git") {
             steps {
                 withCredentials([usernamePassword(credentialsId: "github", usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                     sh """
