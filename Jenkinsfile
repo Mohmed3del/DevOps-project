@@ -36,9 +36,9 @@ pipeline {
             steps {
                 
                     sh """
-                        cat Deployment.yaml
-                        sed -i 's/${APP_NAME}:1.*/${APP_NAME}:1.0.${BUILD_NUMBER}/g' K8S/Deployment.yaml
-                        cat Deployment.yaml
+                        cat K8S/Deployment.yml
+                        sed -i 's/${APP_NAME}:1.*/${APP_NAME}:1.0.${BUILD_NUMBER}/g' K8S/Deployment.yml
+                        cat K8S/Deployment.yml
                     """
                 }
             }
