@@ -2,10 +2,10 @@ pipeline {
   agent any
 
   environment {
-    URL= "github.com/Mohmed3del/Demo-DevOps-project.git"
-    EMAIL = "mohmed.adel.188.2017@gmail.com"
-    BRANCH = "K8S_argoCD"
-    APP_NAME = "go_app"
+    GITURL= "github.com/Mohmed3del/Demo-DevOps-project.git"
+    GITEMAIL = "mohmed.adel.188.2017@gmail.com"
+    GITBRANCH = "K8S_argoCD"
+    APP_NAME = "889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app"
   }
   stages {
     
@@ -44,10 +44,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: "github", usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                     sh """
                         git config --global user.name ${USER}
-                        git config --global user.email ${EMAIL}
+                        git config --global user.email ${GITEMAIL}
                         git add deployment.yaml
                         git commit -m "Updated Deployment Manifest"
-                        git push https://${USER}:${PASSWORD}@${URL} origin ${BRANCH}
+                        git push https://${USER}:${PASSWORD}@${GITURL} origin ${GITBRANCH}
 
                     """
                 }
