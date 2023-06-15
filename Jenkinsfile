@@ -64,7 +64,7 @@ pipeline {
                 $class: 'AmazonWebServicesCredentialsBinding',
                 credentialsId: 'aws-creds-id',
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
                 script {
                         def argocdInstalled = sh(script: 'kubectl get namespace argocd', returnStatus: true) == 0
                         if (argocdInstalled) {
@@ -79,7 +79,7 @@ pipeline {
                             """
                         }
                     }
-
+                }
             }
         }
         stage('Install Prometheus, Grafana, and Nginx controller') {
