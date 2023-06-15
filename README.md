@@ -73,7 +73,6 @@ Enter number 4 to Build and Configure Inrastructure in AWS
   - slacktoken => type: secret text
 - Configure Global tools:
   - SonarQube Scanner => Name: sonarscanner , check mark "Install automatically"
-  - Maven => Name: maven_3.9.1 , check mark "Install automatically"
 - Configure System:
   - Slack => Workspace: the workspace that has Jenkins CI , Credential: slacktoken , Default channel: the channel selected for Jenkins CI
   - SonarQube servers => check mark "Environment variables" , Name: sonarserver , Server URL: http://{your sonarqube server ip}:9000 , Server authentication token: sonartoken
