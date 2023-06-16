@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mysql
 spec:
-  replicas: 3
+  # replicas: 3
   selector:
     matchLabels:
       app: mysql
@@ -41,7 +41,7 @@ kind: Deployment
 metadata:
   name: go-app
 spec:
-  replicas: 3
+  # replicas: 3
   selector:
     matchLabels:
       app: go-app
