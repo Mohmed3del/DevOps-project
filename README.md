@@ -89,18 +89,18 @@ Enter number 3 to Build and Configure Inrastructure in AWS
 
 #### on Jenkins Server
 
-![Devops_ci_pipline](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/DevOps-ci.png)
+![Devops_ci_pipline](screenshots/DevOps-ci.png)
 
-![Devops_cd_pipline](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/DevOps-cd.png)
+![Devops_cd_pipline](screenshots/DevOps-cd.png)
 
 #### on Sonarqube Server
 
-![sonarqube](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/sonarqube.png)
+![sonarqube](screenshots/sonarqube.png)
 
 #### on ECR
 
-![ECR](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/ecr.png)
+![ECR](screenshots/ecr.png)
 
 #### on Slack
 
-![slack](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/slack.png)
+![slack](screenshots/slack.png)
