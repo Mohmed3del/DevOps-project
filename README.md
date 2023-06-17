@@ -13,6 +13,7 @@ jenkins_CI branch contains:
 - go source code
 - Dockerfile to build docker image from this source code
 - Jenkinsfile for Continuous integration pipeline
+- Docker Compose
 
 K8S_argoCD branch contains:
 
@@ -64,7 +65,7 @@ Enter number 3 to Build and Configure Inrastructure in AWS
 #### on Jenkins:
 
 - Create Credentials:
-  - awslogin => type: username with password
+  - awslogin => type: AWS Credentials
   - githublogin => type: ssh username with privatekey
   - sonartoken => type: secret text
   - slacktoken => type: secret text
@@ -85,3 +86,21 @@ Enter number 3 to Build and Configure Inrastructure in AWS
 #### on github
 
 - create a webhook from the forked repo to your jenkins ip (http://{your jenkins ip}/github-webhook/)
+
+#### on Jenkins Server
+
+![Devops_ci_pipline](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/DevOps-ci.png)
+
+![Devops_cd_pipline](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/DevOps-cd.png)
+
+#### on Sonarqube Server
+
+![sonarqube](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/sonarqube.png)
+
+#### on ECR
+
+![ECR](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/ecr.png)
+
+#### on Slack
+
+![slack](https://github.com/Mohmed3del/Demo-DevOps-project/blob/main/screenshots/slack.png)
