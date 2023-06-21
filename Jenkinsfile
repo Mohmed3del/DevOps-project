@@ -29,35 +29,35 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                 sh " aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster"
+                }
             }
         }
-    }
-        // stage("Update the Deployment Tags") {
-        //     steps {
+        stage("Update the Deployment Tags") {
+            steps {
                 
-        //             sh """
-        //                 cat K8S/Deployment.yml
-        //                 sed -i 's#${APP_NAME}.*#${APP_NAME}:${BUILD_NUMBER}#g' K8S/Deployment.yml
-        //                 cat K8S/Deployment.yml
-        //             """
-        //         }
-        //         // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
-        //     }
+                sh """
+                    cat K8S/Deployment.yml
+                    sed -i 's#${APP_NAME}.*#${APP_NAME}:${BUILD_NUMBER}#g' K8S/Deployment.yml
+                    cat K8S/Deployment.yml
+                """
+            }
+            // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
+        }
         
-        // stage("Push the changed deployment file to Git") {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: "github", usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-        //             sh """
-        //                 git config --global user.name ${USER}
-        //                 git config --global user.email ${GITEMAIL}
-        //                 git add deployment.yaml
-        //                 git commit -m "Updated Deployment Manifest"
-        //                 git push https://${USER}:${PASSWORD}@${GITURL} origin ${GITBRANCH}
+        stage("Push the changed deployment file to Git") {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "github", usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                        git config --global user.name ${USER}
+                        git config --global user.email ${GITEMAIL}
+                        git add deployment.yaml
+                        git commit -m "Updated Deployment Manifest"
+                        git push https://${USER}:${PASSWORD}@${GITURL} HEAD:${GITBRANCH}
 
-        //             """
-        //         }
-        //     }
-        // }    
+                    """
+                }
+            }
+        }    
         stage('Install ArgoCD, Prometheus, Grafana, and Nginx controller ') {
             steps {
             withCredentials([[
