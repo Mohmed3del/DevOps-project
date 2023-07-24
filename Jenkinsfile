@@ -80,7 +80,7 @@ pipeline {
                             helm repo add nginx-stable https://helm.nginx.com/stable
                             helm repo update
                             helm install prometheus prometheus-community/prometheus
-                            helm install my-release nginx-stable/nginx-ingress
+                            helm install Ingress-Controller nginx-stable/nginx-ingress
                             """
                         }
                     }
