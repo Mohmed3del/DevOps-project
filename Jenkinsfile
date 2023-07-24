@@ -6,8 +6,8 @@ pipeline {
         go 'go'
     }
     environment {
-        ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app"
-        // IMAGE_NAME = "go_app"
+        ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
+        DOCKER_IMAGE = "${ECR_REGISTRY}/go_app"
         // TAG_NAME = "${env.BUILD_NUMBER}"
     }
     
@@ -46,7 +46,6 @@ pipeline {
                 script {
                     scannerHome = tool 'sonarscanner'
                 }
-                // Run the SonarScanner to analyze the code
                 withSonarQubeEnv('sonarqube') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
@@ -57,26 +56,18 @@ pipeline {
             }
         }
         stage("Quality Gate") {
-          steps{
-            timeout(time: 1, unit: 'HOURS') {
-              waitForQualityGate abortPipeline: true
+            steps{
+                timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+                }
             }
-          }
         }
 
-        // stage('Sonarqube Quality Gate') {
-        //     steps {
-        //         script{
-        //             timeout(time: 1, unit: 'MINUTES') {
-        //                 waitForQualityGate abortPipeline: true
-        //             }
-        //         }
-        //     }
-        // }
+    
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $ECR_REGISTRY:$BUILD_NUMBER ./app"
+                sh "docker build -t $DOCKER_IMAGE:$BUILD_NUMBER ./app"
             }
         }
         stage('ECR Login') {
@@ -101,7 +92,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
                         script {
 
-                            sh "docker push $ECR_REGISTRY:$BUILD_NUMBER"
+                            sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
                     }
                 }
             }
