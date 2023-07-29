@@ -16,5 +16,10 @@ RUN go build -o main .
 #EXPOSE the port
 EXPOSE 9090
 
+#  Run Containers as Non-Root Users
+RUN addgroup dev && adduser -aDG dev go_U
+
+USER go_U
+
 # Run the executable
 CMD ["./main"]
