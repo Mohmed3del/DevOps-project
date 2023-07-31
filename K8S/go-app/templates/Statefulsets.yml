@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: {{.Values.mysql.name}}
+  name: {{.Values.mysql.name}}
+spec:
+  replicas: {{.Values.mysql.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{.Values.mysql.name}}
+  serviceName: {{.Values.mysql.name}}-headless
+  template:
+    metadata:
+      labels:
+        app: {{.Values.mysql.name}}
+    spec:
+      containers:
+      - image: {{.Values.mysql.image.name}}:{{.Values.mysql.image.tag}}
+        name: {{.Values.mysql.name}}
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-credentials
+              key: {{ .Values.mysql.password | b64enc|quote }}
+                
+        - name:  MYSQL_DATABASE
+          value: "internship"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: {{.Values.mysql.volumeclaimtemplates.name}}
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: {{.Values.mysql.volumeclaimtemplates.name}}
+    spec:
+      accessModes: 
+      - {{.Values.storageclass.accessmodes}}
+      storageClassName: {{.Values.storageclass.name}}
+      resources:
+        requests:
+          storage: {{.Values.storageclass.storage}}

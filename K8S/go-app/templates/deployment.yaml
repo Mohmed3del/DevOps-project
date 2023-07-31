@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.app.name }}
+  name: {{ .Values.app.name }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+      - image: {{.Values.app.image.name}}:{{.Values.app.image.tag}}
+        name: app
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 3000
+        ports:
+        - containerPort: 9090
+        env: {{- toYaml .Values.env | nindent 8 }}
+        # - name: MYSQL_PORT
+        #   value: "3306"
+        # - name: MYSQL_HOST
+        #   value: {{.Values.mysql.name}}-h
+        # - name: MYSQL_USER
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: db-secret
+        #       key: username
+        # - name: MYSQL_PASS
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: db-secret
+        #       key: password

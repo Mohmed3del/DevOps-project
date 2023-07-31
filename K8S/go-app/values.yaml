@@ -1,0 +1,52 @@
+app:
+  name: go-app
+  replicaCount: 2
+  minreplicas: 1
+  maxreplicas: 3
+  average_utilization: 70
+  image:
+    name: mohmed3del/go-app
+    tag: "2.0"
+  containerport: "9090"
+  serviceport: "80"
+
+
+mysql:
+  replicaCount: 2
+  minreplicas: 1
+  maxreplicas: 3
+  average_utilization: 70
+  name: mysql
+  image:
+    name: mysql
+    tag: "8.0"
+  volumeclaimtemplates:
+    name: mysqldb
+  username: root
+  password: root
+  containerport: "3306"
+  serviceport: "3306"
+
+storageclass:
+  name: "ebs-storage"
+  accessmodes: ReadWriteOnce
+  storage: 1Gi
+
+env:
+  - name: MYSQL_ROOT_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: mysqlCredentials
+        key: password
+  - name: MYSQL_USER
+    valueFrom:
+      secretKeyRef:
+        name: mysqlCredentials
+        key: username
+  - name: MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: mysqlCredentials
+        key: password
+  - name: MYSQL_DATABASE
+    value: "inernship"

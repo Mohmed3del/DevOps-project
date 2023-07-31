@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: monitoring
+    server: "https://kubernetes.default.svc"
+  source:
+    repoURL: "https://prometheus-community.github.io/helm-charts"
+    targetRevision: 48.2.2
+    chart: kube-prometheus-stack
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true #to create a NameSpace if it doesn't exists
+
+    automated:
+      selfHeal: true # automaticaly sync between git repo and desired state
+      prune: true # clean resources from the k8s that're not in git repo
+
