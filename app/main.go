@@ -1,3 +1,5 @@
+
+
 package main
 
 import (
@@ -6,6 +8,7 @@ import (
 	"strconv"
 	"time"
 )
+
 
 func main() {
 	http.ListenAndServe(":9090", &handler{})
@@ -25,6 +28,11 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`{"status":"ok"}`))
 		return
 	}
+	if r.URL.Path == "/" {
+		w.WriteHeader(200)
+        w.Write([]byte( "Hi everyone - I am looking for a new role and would appreciate your support.\nThank you in advance for any connections, advice, or opportunities you can offer."))
+        return
+    }
 	switch r.Method {
 	case "GET":
 		rs, err := _connection.Query(`SELECT id,created_at FROM stuff`)
