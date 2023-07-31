@@ -41,11 +41,12 @@ pipeline {
         }
 
         stage('Code Analysis') {
-            
-            steps {
-                environment {
+            environment {
                     scannerHome = tool 'sonarscanner'
                 }
+            
+            steps {
+                
                 withSonarQubeEnv('sonarqube') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
