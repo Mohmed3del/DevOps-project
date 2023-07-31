@@ -40,7 +40,7 @@ pipeline {
                 
                 sh """
                     sed -i \"s/^ *tag_app:.*/  tag_app: ${GIT_COMMIT.take(8)}/\" K8S/go-app/values.yaml
-                    
+                
                 """
             }
             // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
