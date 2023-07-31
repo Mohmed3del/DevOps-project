@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Values.mysql.name}}-headless
+  name: {{.Values.DB.name}}-headless
 spec:
   clusterIP: None
   selector:
-    app: {{.Values.mysql.name}}
+    app: {{.Values.DB.name}}
   ports:
   - port: 3306
     targetPort: 3306

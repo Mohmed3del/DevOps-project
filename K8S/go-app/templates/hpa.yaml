@@ -20,18 +20,18 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{.Values.mysql.name}}-hpa
+  name: {{.Values.DB.name}}-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: StatefulSet
-    name: {{.Values.mysql.name}}
-  minReplicas: {{.Values.mysql.minreplicas}}
-  maxReplicas: {{.Values.mysql.maxreplicas}}
+    name: {{.Values.DB.name}}
+  minReplicas: {{.Values.DB.minreplicas}}
+  maxReplicas: {{.Values.DB.maxreplicas}}
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: {{.Values.mysql.average_utilization}}
+        averageUtilization: {{.Values.DB.average_utilization}}

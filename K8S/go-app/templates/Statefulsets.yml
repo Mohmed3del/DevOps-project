@@ -2,39 +2,39 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: {{.Values.mysql.name}}
-  name: {{.Values.mysql.name}}
+    app: {{.Values.DB.name}}
+  name: {{.Values.DB.name}}
 spec:
-  replicas: {{.Values.mysql.replicaCount}}
+  replicas: {{.Values.DB.replicaCount}}
   selector:
     matchLabels:
-      app: {{.Values.mysql.name}}
-  serviceName: {{.Values.mysql.name}}-headless
+      app: {{.Values.DB.name}}
+  serviceName: {{.Values.DB.name}}-headless
   template:
     metadata:
       labels:
-        app: {{.Values.mysql.name}}
+        app: {{.Values.DB.name}}
     spec:
       containers:
-      - image: {{.Values.mysql.image.name}}:{{.Values.mysql.image.tag}}
-        name: {{.Values.mysql.name}}
+      - image: {{.Values.DB.image.name}}:{{.Values.DB.image.tag}}
+        name: {{.Values.DB.name}}
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-credentials
-              key: {{ .Values.mysql.password | b64enc|quote }}
+              name: DB-credentials
+              key: {{ .Values.DB.password | b64enc|quote }}
                 
         - name:  MYSQL_DATABASE
           value: "internship"
         ports:
         - containerPort: 3306
         volumeMounts:
-        - name: {{.Values.mysql.volumeclaimtemplates.name}}
+        - name: {{.Values.DB.volumeclaimtemplates.name}}
           mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: {{.Values.mysql.volumeclaimtemplates.name}}
+      name: {{.Values.DB.volumeclaimtemplates.name}}
     spec:
       accessModes: 
       - {{.Values.storageclass.accessmodes}}
