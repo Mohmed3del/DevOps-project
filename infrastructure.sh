@@ -15,7 +15,6 @@ apply|2)
 configure|3)
     terraform -chdir=./Terraform init \
     && terraform -chdir=./Terraform apply --auto-approve \
-    && chmod 400 ../keys/DevOps.pem \
     && cd Ansible \
     && ansible-playbook playbook.yml ;break ;;	
 
