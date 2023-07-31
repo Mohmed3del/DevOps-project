@@ -43,6 +43,7 @@ pipeline {
                 
                 """
             }
+            // bash create_secret.sh
             // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
         }
         
@@ -52,8 +53,8 @@ pipeline {
                     sh """
                         git config --global user.name ${USER}
                         git config --global user.email ${GITEMAIL}
-                        git add deployment.yaml
-                        git commit -m "Updated Deployment Manifest"
+                        git add K8S/go-app/values.yaml
+                        git commit -m "Updated helm cahrt "
                         git push https://${USER}:${PASSWORD}@${GITURL} HEAD:${GITBRANCH}
 
                     """
