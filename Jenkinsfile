@@ -64,7 +64,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $DOCKER_IMAGE:$BUILD_NUMBER ./app"
+                dir('./app'){
+                    sh "docker build -t $DOCKER_IMAGE:${GIT_COMMIT.take(8)} ."
+                }
             }
         }
         stage('ECR Login') {
@@ -89,7 +91,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
                         script {
 
-                            sh "docker push $DOCKER_IMAGE:$BUILD_NUMBER"
+                            sh "docker push $DOCKER_IMAGE:${GIT_COMMIT.take(8)}"
                     }
                 }
             }
