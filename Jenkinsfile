@@ -30,7 +30,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                 sh """
                 aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster
-                sh create_secret.sh
+                // bash create_secret.sh
                 """
                 }
             }
@@ -78,11 +78,7 @@ pipeline {
                             kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
                             kubectl create namespace app
                             kubectl apply -f argo.yml
-                            helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-                            helm repo add nginx-stable https://helm.nginx.com/stable
-                            helm repo update
-                            helm install prometheus prometheus-community/prometheus
-                            helm install Ingress-Controller nginx-stable/nginx-ingress
+                            
                             """
                         }
                     }
