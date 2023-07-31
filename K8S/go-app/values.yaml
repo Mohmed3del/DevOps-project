@@ -5,8 +5,8 @@ app:
   maxreplicas: 3
   average_utilization: 70
   image:
-    name: mohmed3del/go-app
-    tag: "2.0"
+    repo_app: mohmed3del/go-app
+    tag_app: "2.0"
   containerport: "9090"
   serviceport: "80"
   Docker_secret: ecr-secret

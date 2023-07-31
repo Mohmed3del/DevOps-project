@@ -18,7 +18,7 @@ spec:
       imagePullSecrets:
       - name: {{.Values.app.Docker_secret}}
       containers:
-      - image: {{.Values.app.image.name}}:{{.Values.app.image.tag}}
+      - image: {{.Values.app.image.repo_app}}:{{.Values.app.image.tag_app}}
         name: app
         securityContext:
           runAsUser: 1000
