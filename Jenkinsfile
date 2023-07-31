@@ -41,9 +41,9 @@ pipeline {
         }
 
         stage('Code Analysis') {
-            environment {
-                    scannerHome = tool 'sonarscanner'
-                }
+            
+                def scannerHome = tool 'sonarscanner';
+                
             
             steps {
                 
