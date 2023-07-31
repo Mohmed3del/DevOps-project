@@ -30,7 +30,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                 sh """
                 aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster
-                // bash create_secret.sh
+                
                 """
                 }
             }
