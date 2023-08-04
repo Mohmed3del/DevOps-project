@@ -19,7 +19,7 @@ configure|3)
     && ansible-playbook playbook.yml ;break ;;	
 
 destroy|4)
-	terraform destroy --auto-approve;;
+	terraform -chdir=./Terraform destroy --auto-approve ;break ;;
     
 *)
 echo "$REPLY is not valid choice"	
