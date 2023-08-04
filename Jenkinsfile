@@ -39,7 +39,7 @@ pipeline {
             steps {
                 
                 sh """
-                    sed -i \"s/^ *tag_app:.*/  tag_app: ${GIT_COMMIT.take(8)}/\" K8S/go-app/values.yaml
+                    sed -i \"s/tag_app:.*/tag_app: ${GIT_COMMIT.take(8)}/g\" K8S/go-app/values.yaml
                 
                 """
             }
@@ -77,8 +77,7 @@ pipeline {
                             sh """
                             kubectl create namespace argocd
                             kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-                            kubectl create namespace app
-                            kubectl apply -f argo.yml
+                            kubectl apply -f argocd.yml
                             
                             """
                         }
