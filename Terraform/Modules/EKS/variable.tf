@@ -10,6 +10,9 @@ variable "subnet_list" {
 #   type = string
 # }
 
+variable "vpcid" {
+  type = string
+}
 #worker nodes
 variable "instance_types" {
   type = list(string)

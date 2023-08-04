@@ -12,9 +12,17 @@ variable "EC2_Name" {
   type = string
 }
 
+variable "EC2_Port" {
+  type = number
+}
+
+variable "duckdns_token" {
+  type    = string
+  default = "$duckdns_token"
+}
 variable "instance_ami" {
   type = object({
-    owners = list(string)
+    owners   = list(string)
     name_ami = list(string)
   })
 }
@@ -46,9 +54,9 @@ variable "sg_name" {
 
 variable "sg_rules" {
   type = map(object({
-    type = string
-    port = number
-    protocol = string
+    type        = string
+    port        = number
+    protocol    = string
     cidr_blocks = list(string)
-}))
+  }))
 }
