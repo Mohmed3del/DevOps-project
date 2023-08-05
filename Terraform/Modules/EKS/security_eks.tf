@@ -8,7 +8,7 @@ resource "aws_security_group" "eks_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [var.vpcid]
+    cidr_blocks = [var.cidr]
   }
 
   egress {

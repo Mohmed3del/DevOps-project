@@ -16,9 +16,8 @@ variable "EC2_Port" {
   type = number
 }
 
-variable "duckdns_token" {
-  type    = string
-  default = "$duckdns_token"
+variable "duckdnstoken" {
+  default = "be258d47-8fb7-4a4c-aa2e-f253f741b1f9"
 }
 variable "instance_ami" {
   type = object({

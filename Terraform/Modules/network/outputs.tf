@@ -24,6 +24,10 @@ output "vpcid" {
   value = aws_vpc.main.id
 
 }
+
+output "vpc_cidr" {
+  value = aws_vpc.main.cidr_block
+}
 output "availability_zones" {
   value = data.aws_availability_zones.available.names
 }

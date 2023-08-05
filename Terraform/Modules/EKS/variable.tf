@@ -6,9 +6,9 @@ variable "Name" {
 variable "subnet_list" {
   type = list(string)
 }
-# variable "cidr" {
-#   type = string
-# }
+variable "cidr" {
+  type = string
+}
 
 variable "vpcid" {
   type = string

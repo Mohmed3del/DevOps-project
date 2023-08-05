@@ -116,8 +116,8 @@ module "EKS" {
   subnet_list    = [module.network.subnet_id["private1"], module.network.subnet_id["private2"]]
   key_pair       = var.key_pair
   instance_types = var.instance_types
-  # cidr           = module.network.vpcid
-  vpcid = module.network.vpcid
+  cidr           = var.vpcid
+  vpcid          = module.network.vpcid
   scaling_config = {
     desired_size = var.scaling_config["desired_size"]
     max_size     = var.scaling_config["max_size"]
