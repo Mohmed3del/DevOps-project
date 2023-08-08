@@ -66,6 +66,8 @@ module "jenkins" {
   sg_rules = {
     "ssh port"     = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = ["${chomp(data.http.myip.body)}/32"] }
     "jenkins port" = { type = "ingress", port = "8080", protocol = "tcp", cidr_blocks = [var.IPS] }
+    "HTTP port"    = { type = "ingress", port = "80", protocol = "tcp", cidr_blocks = [var.IPS] }
+    "HTTPS port"   = { type = "ingress", port = "443", protocol = "tcp", cidr_blocks = [var.IPS] }
     "egress all"   = { type = "egress", port = "0", protocol = "-1", cidr_blocks = [var.IPS] }
   }
 }
@@ -94,6 +96,8 @@ module "sonarqube" {
   sg_rules = {
     "ssh port"       = { type = "ingress", port = "22", protocol = "tcp", cidr_blocks = ["${chomp(data.http.myip.body)}/32"] }
     "sonarqube port" = { type = "ingress", port = "9000", protocol = "tcp", cidr_blocks = [var.IPS] }
+    "HTTP port"      = { type = "ingress", port = "80", protocol = "tcp", cidr_blocks = [var.IPS] }
+    "HTTPS port"     = { type = "ingress", port = "443", protocol = "tcp", cidr_blocks = [var.IPS] }
     "egress all"     = { type = "egress", port = "0", protocol = "-1", cidr_blocks = [var.IPS] }
   }
 }
