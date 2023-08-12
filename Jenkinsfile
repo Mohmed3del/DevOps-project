@@ -69,6 +69,13 @@ pipeline {
                 }
             }
         }
+        stage('Scan Docker Image Using Trivy') {
+            steps {
+                
+                sh "trivy image $DOCKER_IMAGE:${GIT_COMMIT.take(8)}"
+                
+            }
+        }
         stage('ECR Login') {
             steps {
                 withCredentials([[
