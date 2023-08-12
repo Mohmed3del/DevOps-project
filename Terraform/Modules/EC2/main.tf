@@ -19,9 +19,9 @@ resource "aws_instance" "EC2_instance" {
     command = "echo ${self.tags_all["Name"]} ansible_host=${self.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=../keys/${var.key_pair}.pem >> ../Ansible/inventory"
   }
 
-  # provisioner "local-exec" {
-  #   command = "echo url='https://www.duckdns.org/update?domains=${self.tags_all["Name"]}-m3del&token=${var.duckdnstoken}&ip=${self.public_ip}:${self.tags_all["Port"]}' | curl -K -"
-  # }
+  provisioner "local-exec" {
+    command = "echo url='https://www.duckdns.org/update?domains=${self.tags_all["Name"]}-devops&token=${var.duckdnstoken}&ip=${self.public_ip}' | curl -K -"
+  }
 
 
 

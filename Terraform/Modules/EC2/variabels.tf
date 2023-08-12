@@ -17,7 +17,7 @@ variable "EC2_Port" {
 }
 
 variable "duckdnstoken" {
-  default = "be258d47-8fb7-4a4c-aa2e-f253f741b1f9"
+  default = ""
 }
 variable "instance_ami" {
   type = object({

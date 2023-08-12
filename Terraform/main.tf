@@ -51,6 +51,7 @@ module "jenkins" {
   #EC2
   EC2_Name = "jenkins"
   EC2_Port = 8080
+  duckdnstoken = var.duckdnstoken
   instance_ami = {
     name_ami = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
     owners   = ["amazon"]
@@ -75,12 +76,14 @@ module "jenkins" {
 module "sonarqube" {
   source = "./Modules/EC2"
   Name   = var.Name
+  
 
   vpc_id = module.network.vpcid
 
   #EC2
   EC2_Name = "sonarqube"
   EC2_Port = 9000
+  duckdnstoken = var.duckdnstoken
   instance_ami = {
     name_ami = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
     owners   = ["amazon"]
