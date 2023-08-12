@@ -1,0 +1,60 @@
+---
+# tasks file for roles/nginx_proxy
+- name: Update apt packages
+  apt:
+    update_cache: yes
+    state: latest
+- name: Install requirements of ssl
+  apt:
+    name:
+      - nginx
+      - certbot
+      - python3-certbot-nginx
+
+- name: Configure Nginx for  reverse proxy
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/{{ domain_hostname }}
+  register: config  
+
+
+- name: Enable Nginx site
+  file:
+    src: /etc/nginx/sites-available/{{ domain_hostname }}
+    dest: /etc/nginx/sites-enabled/{{ domain_hostname }}
+    state: link
+
+- name: restart nginx service
+  systemd:
+    name: nginx
+    state: restarted
+  when: config.changed  
+
+- name: Stop nginx service
+  systemd:
+    name: nginx
+    state: stopped
+
+- name: check if we have generated a cert already
+  stat:
+    path: "/etc/letsencrypt/live/{{ domain_hostname }}*/fullchain.pem"
+  register: cert_stats
+
+- name: run certbot to generate the certificates
+  command: #"certbot certonly --standalone -d {{ domain_hostname }} --register-unsafely-without-email --agree-tos --force-renewal"
+    "certbot --nginx -d {{ domain_hostname }}   --register-unsafely-without-email --agree-tos --force-renewal"
+  ignore_errors: true
+  when: cert_stats.stat.exists == False
+  # notify:
+  #   - restart nginx
+
+
+- name: check if configuration is valid
+  command: nginx -t
+  when: config.changed 
+  # notify:
+  #   - restart nginx
+
+
+
+

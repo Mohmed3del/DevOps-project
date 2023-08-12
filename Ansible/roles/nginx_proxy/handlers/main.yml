@@ -1,0 +1,6 @@
+---
+# handlers file for roles/nginx_proxy
+# - name: restart nginx
+#   systemd:
+#     name: nginx
+#     state: restarted

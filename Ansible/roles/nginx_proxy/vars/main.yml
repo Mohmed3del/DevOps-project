@@ -1,0 +1,7 @@
+---
+# vars file for roles/nginx_proxy
+# domain_hostname: jenkins-devops.duckdns.org when: inventory_hostname == "jenkins"
+certbot_email: admin@admin.com
+
+
+

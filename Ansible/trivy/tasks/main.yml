@@ -1,0 +1,27 @@
+---
+# tasks file for trivy
+- name: Add Trivy repository key
+  become: yes
+  apt_key:
+    url: https://aquasecurity.github.io/trivy-repo/deb/public.key
+    state: present
+
+- name: Add Trivy repository
+  become: yes
+  apt_repository:
+    repo: "deb https://aquasecurity.github.io/trivy-repo/deb jammy main"
+    state: present
+    filename: trivy
+  register: repo
+
+- name: Update apt cache
+  become: yes
+  apt:
+    update_cache: yes
+  when: repo.changed
+
+- name: Install Trivy
+  become: yes
+  apt:
+    name: trivy
+    state: present

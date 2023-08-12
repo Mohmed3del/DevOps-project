@@ -1,13 +1,23 @@
+---
 - name: Install and configure Jenkins
   hosts: jenkins
-  gather_facts: no
+  gather_facts: true
   roles:
     - jenkins
     - docker-aws
-
+    - trivy
+  
 - name: Install and configure sonarqube
   hosts: sonarqube
-  gather_facts: no
   roles:
     - postgresql
     - sonar
+
+- name: Enabling TLS/SSL with Let's Encrypt
+  hosts: all
+  roles:
+    - role: nginx_proxy
+      vars:
+        port: "{{ 8080 if inventory_hostname == 'jenkins' else 9000 }}"
+        domain_hostname: "{{ inventory_hostname }}-devops.duckdns.org"
+      when: inventory_hostname == 'jenkins' or inventory_hostname == 'sonarqube'
