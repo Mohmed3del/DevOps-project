@@ -1,7 +1,7 @@
-# use official Golang image
-FROM golang:1.20.5-alpine
+# Stage 1: Build the Go binary
+FROM golang:1.20.5-alpine AS builder
 
-# set working directory
+# Set working directory
 WORKDIR /app
 
 # Copy the source code
@@ -13,11 +13,20 @@ RUN go get -d -v ./...
 # Build the Go app
 RUN go build -o main .
 
-#EXPOSE the port
+# Stage 2: Create a minimal runtime image
+FROM alpine:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built binary from the previous stage
+COPY --from=builder /app/main .
+
+# EXPOSE the port
 EXPOSE 9090
 
-#  Run Containers as Non-Root Users
-RUN addgroup dev && adduser -DG dev go_U
+# Run Containers as Non-Root Users
+RUN addgroup dev && adduser -D -G dev go_U
 
 USER go_U
 
