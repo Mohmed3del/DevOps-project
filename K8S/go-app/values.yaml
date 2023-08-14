@@ -6,7 +6,7 @@ app:
   average_utilization: 70
   image:
     repo_app: mohmed3del/go-app
-    tag_app: "2.0"
+    tag_app: e8097dbd
   containerport: "9090"
   serviceport: "80"
   Docker_secret: ecr-secret
