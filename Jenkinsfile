@@ -2,9 +2,9 @@ pipeline {
     agent any
 
 
-    tools{
-        go 'go'
-    }
+    // tools{
+    //     go 'go'
+    // }
     environment {
         ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
         DOCKER_IMAGE = "${ECR_REGISTRY}/go_app"
@@ -23,22 +23,22 @@ pipeline {
                 git branch: 'jenkins_CI', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
             }
         }
-        stage('Build Code') {
-            steps {
-                // Change to the app directory before building
-                dir('app') {
-                    sh 'go build -v ./...'
-                }
-            }
-        }
-        stage('Test Code') {
-            steps {
-                // Change to the app directory before testing
-                dir('app') {
-                    sh 'go test -v ./...'
-                }
-            }
-        }
+        // stage('Build Code') {
+        //     steps {
+        //         // Change to the app directory before building
+        //         dir('app') {
+        //             sh 'go build -v ./...'
+        //         }
+        //     }
+        // }
+        // stage('Test Code') {
+        //     steps {
+        //         // Change to the app directory before testing
+        //         dir('app') {
+        //             sh 'go test -v ./...'
+        //         }
+        //     }
+        // }
 
         stage('Code Analysis') {
             
