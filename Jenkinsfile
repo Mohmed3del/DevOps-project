@@ -40,7 +40,7 @@ pipeline {
                 
                 sh """
                     sed -i \"s/tag_app:.*/tag_app: ${GIT_COMMIT.take(8)}/g\" K8S/go-app/values.yaml
-                
+                    bash create_secret.sh
                 """
             }
             // bash create_secret.sh
