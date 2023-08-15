@@ -8,7 +8,9 @@ pipeline {
     environment {
         ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
         DOCKER_IMAGE = "${ECR_REGISTRY}/go_app"
-        // TAG_NAME = "${env.BUILD_NUMBER}"
+        RELEASE = "1.0.0"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        
     }
     
     stages {
@@ -65,14 +67,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 dir('./app'){
-                    sh "docker build -t $DOCKER_IMAGE:${GIT_COMMIT.take(8)} ."
+                    sh "docker build -t $DOCKER_IMAGE:$IMAGE_TAG ."
                 }
             }
         }
         stage('Scan Docker Image Using Trivy') {
             steps {
                 
-                sh "trivy image $DOCKER_IMAGE:${GIT_COMMIT.take(8)}"
+                sh "trivy image $DOCKER_IMAGE:$IMAGE_TAG"
                 
             }
         }
@@ -98,7 +100,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
                         script {
 
-                            sh "docker push $DOCKER_IMAGE:${GIT_COMMIT.take(8)}"
+                            sh "docker push $DOCKER_IMAGE:$IMAGE_TAG"
                     }
                 }
             }
