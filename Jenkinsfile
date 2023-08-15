@@ -74,7 +74,7 @@ pipeline {
         stage('Scan Docker Image Using Trivy') {
             steps {
                 
-                sh "trivy image $DOCKER_IMAGE:$IMAGE_TAG"
+                sh "trivy image --no-progress --scanners vuln  --exit-code 1 $DOCKER_IMAGE:$IMAGE_TAG"
                 
             }
         }
