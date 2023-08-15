@@ -6,6 +6,8 @@ pipeline {
     GITEMAIL = "mohmed.adel.188.2017@gmail.com"
     GITBRANCH = "K8S_argoCD"
     APP_NAME = "889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app"
+    RELEASE = "1.0.0"
+    IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
   }
   stages {
     
@@ -39,7 +41,7 @@ pipeline {
             steps {
                 
                 sh """
-                    sed -i \"s/tag_app:.*/tag_app: ${GIT_COMMIT.take(8)}/g\" K8S/go-app/values.yaml
+                    sed -i \"s/tag_app:.*/tag_app: ${IMAGE_TAG}/g\" K8S/go-app/values.yaml
                     bash create_secret.sh
                 """
             }
