@@ -49,7 +49,7 @@ variable "key_pair" {
 }
 
 variable "duckdnstoken" {
-  
+
 }
 
 
