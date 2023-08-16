@@ -8,13 +8,10 @@ spec:
   source:
     repoURL: https://github.com/Mohmed3del/Demo-DevOps-project.git
     targetRevision: K8S_argoCD
-    path: ArgoCD
+    path: ArgoCd
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
-    syncOptions:
-      - createNamespace=true
     automated:
-      selfHeal: true
       prune: true

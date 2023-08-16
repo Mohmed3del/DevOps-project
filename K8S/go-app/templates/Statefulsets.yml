@@ -20,10 +20,7 @@ spec:
         name: {{.Values.DB.name}}
         env:
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: DB-credentials
-              key: {{ .Values.DB.password | b64enc|quote }}
+          value: {{ .Values.DB.password }}
                 
         - name:  MYSQL_DATABASE
           value: "internship"
