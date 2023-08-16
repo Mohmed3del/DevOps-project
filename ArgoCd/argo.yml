@@ -9,6 +9,11 @@ spec:
     repoURL: https://github.com/Mohmed3del/Demo-DevOps-project.git
     targetRevision: K8S_argoCD
     path: K8S/go-app
+    helm:
+      valueFiles:
+        - values.yaml
+      releaseName: go-app
+      chart: charts/go-app
   destination:
     server: https://kubernetes.default.svc
     namespace: app
