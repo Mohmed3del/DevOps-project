@@ -27,20 +27,11 @@ spec:
         - containerPort: 9090
         env: 
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysqlCredentials
-              key: {{ .Values.DB.password | b64enc}}
+          value: {{ .Values.DB.password }}
         - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: DB-credentials
-              key: {{ .Values.DB.username | b64enc}}
+          value: {{ .Values.DB.username }}
         - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: DB-credentials
-              key: password
+          value: {{ .Values.DB.password }}
         - name: MYSQL_DATABASE
           value: "inernship"
             
