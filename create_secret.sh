@@ -10,7 +10,7 @@ SECRET_NAME=ecr-secret
 TOKEN=$(aws ecr get-login-password --region $ECR_REGION)
 
 # Create Kubernetes secret
-kubectl create secret docker-registry $SECRET_NAME \
+kubectl create secret -n app docker-registry $SECRET_NAME \
   --docker-server=$ECR_ACCOUNT_ID.dkr.ecr.$ECR_REGION.amazonaws.com \
   --docker-username=AWS \
   --docker-password=$TOKEN 

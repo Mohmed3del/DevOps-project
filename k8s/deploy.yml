@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: app
   labels:
     app: go-app
   name: go-app
@@ -31,11 +32,11 @@ spec:
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: DB-credentials
+                  name: db-credentials
                   key: username
                   
             - name: MYSQL_PASS
               valueFrom:
                 secretKeyRef:
-                  name: DB-credentials
+                  name: db-credentials
                   key: password

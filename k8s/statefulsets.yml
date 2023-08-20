@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+  namespace: app
   labels:
     app: mysql
   name: mysql
@@ -22,13 +23,13 @@ spec:
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: DB-credentials
+                  name: db-credentials
                   key: username
 
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: DB-credentials
+                  name: db-credentials
                   key: password
 
             - name: MYSQL_DATABASE

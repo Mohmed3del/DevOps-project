@@ -16,10 +16,10 @@ spec:
                 name: go-app-svc
                 port:
                   number: 80
-          - path: /healthcheck
-            pathType: Prefix
-            backend:
-              service:
-                name: go-app-svc
-                port:
-                  number: 80
+          # - path: /healthcheck
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: go-app-svc
+          #       port:
+          #         number: 80
