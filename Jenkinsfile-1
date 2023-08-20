@@ -38,22 +38,23 @@ pipeline {
             }
         }
         stage("Update the Deployment Tags") {
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds-id',
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                
+        steps {
+            withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: 'aws-creds-id',
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+
                 sh """
-                    sed -i \"s/image:.*/image: '${APP_NAME}:${IMAGE_TAG}'/g\" k8s/deploy.yml
-                    bash create_secret.sh
+                sed -i 's/image:.*/image: ${APP_NAME}:${IMAGE_TAG}/g' k8s/deploy.yml
+                bash create_secret.sh
                 """
             }
-            }
+        }
+    }
             // bash create_secret.sh
             // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
-        }
+       
         
         stage("Push the changed deployment file to Git") {
             steps {
