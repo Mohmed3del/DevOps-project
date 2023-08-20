@@ -46,7 +46,7 @@ pipeline {
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
                 sh """
-                sed -i 's/image:.*/image: ${APP_NAME}:${IMAGE_TAG}/g' k8s/deploy.yml
+                sed -i 's#image:.*#image: ${APP_NAME}:${IMAGE_TAG}#g' k8s/deploy.yml
                 bash create_secret.sh
                 """
             }
