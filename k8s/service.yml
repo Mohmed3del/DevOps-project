@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-headless
+spec:
+  clusterIP: None
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app-svc
+  labels:
+    app: go-app-svc
+spec: 
+  selector:
+    app: go-app 
+  ports:
+  - port: 80
+    targetPort: 9090
