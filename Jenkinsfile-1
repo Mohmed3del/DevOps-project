@@ -62,8 +62,8 @@ pipeline {
                     sh """
                         git config --global user.name ${USER}
                         git config --global user.email ${GITEMAIL}
-                        git add K8S/go-app/values.yaml
-                        git commit -m "Updated helm cahrt "
+                        git add k8s/deploy.yml
+                        git commit -m "Updated k8s manifest "
                         git push https://${USER}:${PASSWORD}@${GITURL} HEAD:${GITBRANCH}
 
                     """
