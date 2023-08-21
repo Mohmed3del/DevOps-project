@@ -20,9 +20,6 @@ spec:
       containers:
         - image: 889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.0.0-2
           name: app
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 3000
           ports:
             - containerPort: 9090
           env:

@@ -20,18 +20,21 @@ spec:
       containers:
       - image: {{.Values.app.image.repo_app}}:{{.Values.app.image.tag_app}}
         name: app
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 3000
         ports:
         - containerPort: 9090
         env: 
-        - name: MYSQL_ROOT_PASSWORD
-          value: {{ .Values.DB.password }}
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_HOST
+          value: {{.Values.DB.name}}-headless
+        
         - name: MYSQL_USER
           value: {{ .Values.DB.username }}
-        - name: MYSQL_PASSWORD
+
+        - name: MYSQL_PASS
           value: {{ .Values.DB.password }}
+          
         - name: MYSQL_DATABASE
           value: "inernship"
+        
             

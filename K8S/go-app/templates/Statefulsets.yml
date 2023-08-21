@@ -21,6 +21,12 @@ spec:
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: {{ .Values.DB.password }}
+
+        - name: MYSQL_USER
+          value: {{ .Values.DB.username }}
+
+        - name: MYSQL_PASSWORD
+          value: {{ .Values.DB.password }}
                 
         - name:  MYSQL_DATABASE
           value: "internship"
