@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: app
+  # namespace: app
   labels:
     app: mysql
   name: mysql
@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  serviceName: mysql-headless
+  serviceName: "mysql-headless"
   template:
     metadata:
       labels:
@@ -21,21 +21,12 @@ spec:
           name: mysql
           env:
             - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: username
+              value: root
 
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: password
+              value: root
             - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: password      
+              value: root     
 
             - name: MYSQL_DATABASE
               value: "internship"
@@ -48,8 +39,7 @@ spec:
     - metadata:
         name: mysqldb
       spec:
-        accessModes:
-          - ReadWriteOnce
+        accessModes: [ "ReadWriteOnce" ]
         storageClassName: ebs-storage
         resources:
           requests:

@@ -1,11 +1,13 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  namespace: app
+  # namespace: app
   name: ebs-storage
 provisioner: kubernetes.io/aws-ebs
 parameters:
   type: gp2
 reclaimPolicy: Delete
+mountOptions:
+  - debug
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer

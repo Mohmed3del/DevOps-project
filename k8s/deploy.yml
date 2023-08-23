@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: app
+  # namespace: app
   labels:
     app: go-app
   name: go-app
@@ -15,10 +15,10 @@ spec:
       labels:
         app: go-app
     spec:
-      imagePullSecrets:
-        - name: ecr-secret
+      # imagePullSecrets:
+      #   - name: ecr-secret
       containers:
-        - image: 889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.0.0-2
+        - image: mohmed3del/go-app:2.0
           name: app
           ports:
             - containerPort: 9090
@@ -26,14 +26,11 @@ spec:
             - name: MYSQL_PORT
               value: "3306"
 
+            - name: MYSQL_HOST
+              value: mysql-headless
+
             - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: username
+              value: root
                   
             - name: MYSQL_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: password
+              value: root
