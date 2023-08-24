@@ -2,7 +2,7 @@
 
 # Define variables
 ECR_REGION=us-east-1
-ECR_ACCOUNT_ID=889149267524
+ECR_ACCOUNT_ID=$AC_ID
 SECRET_NAME=ecr-secret
 # EMAIL=<email>
 

@@ -4,8 +4,9 @@ pipeline {
   environment {
     GITURL= "github.com/Mohmed3del/Demo-DevOps-project.git"
     GITEMAIL = "mohmed.adel.188.2017@gmail.com"
+    AC_ID = credentials("AC_ID")
     GITBRANCH = "K8S_argoCD"
-    APP_NAME = "889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app"
+    APP_NAME = "${AC_ID}.dkr.ecr.us-east-1.amazonaws.com/go_app"
     RELEASE = "1.0.0"
     IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
   }
