@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd # Change to your ArgoCD namespace if different
+spec:
+  project: default # Change to your desired project
+  source:
+    repoURL: https://charts.jetstack.io # Cert-Manager Helm repository URL
+    chart: cert-manager
+    helm:
+      parameters:
+        - name: installCRDs
+          value: "true"
+    targetRevision: v1.12.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
