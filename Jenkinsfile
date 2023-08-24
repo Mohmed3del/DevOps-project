@@ -6,7 +6,8 @@ pipeline {
     //     go 'go'
     // }
     environment {
-        ECR_REGISTRY = "889149267524.dkr.ecr.us-east-1.amazonaws.com"
+        AC_ID = credentials("AC_ID")
+        ECR_REGISTRY = "${AC_ID}.dkr.ecr.us-east-1.amazonaws.com"
         DOCKER_IMAGE = "${ECR_REGISTRY}/go_app"
         RELEASE = "1.0.0"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
