@@ -47,7 +47,7 @@ pipeline {
                 
                 sh """
                     sed -i \"s/tag_app:.*/tag_app: ${IMAGE_TAG}/g\" K8S/go-app/values.yaml
-                    bash create_secret.sh
+                    kubectl get secret ecr-secret || bash create_secret.sh
                 """
             }
             }
