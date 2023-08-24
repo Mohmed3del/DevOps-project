@@ -2,19 +2,17 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-ingress
-  namespace: argocd
+  namespace: argocd # Change to your ArgoCD namespace if different
 spec:
-  project: default
+  project: default # Change to your desired project
   source:
-    repoURL: https://helm.nginx.com/stable
-    chart: nginx-ingress
+    repoURL: https://github.com/nginxinc/kubernetes-ingress/
+    targetRevision: v0.18.1 # Specify the desired chart version
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx-ingress
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+      - CreateNamespace=true # to create a NameSpace if it doesn't exists
+    automated: {}
 
-    automated:
-      prune: true
-      selfHeal: true
