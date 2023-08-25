@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# create namespace app
+kubectl create ns app 
+
 # Define variables
 ECR_REGION=us-east-1
 ECR_ACCOUNT_ID=$AC_ID
