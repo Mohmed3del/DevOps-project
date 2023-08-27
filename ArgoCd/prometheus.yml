@@ -5,6 +5,11 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true #to create a NameSpace if it doesn't exists
+    automated: {}
+
   destination:
     namespace: monitoring
     server: "https://kubernetes.default.svc"
@@ -12,12 +17,25 @@ spec:
     repoURL: "https://prometheus-community.github.io/helm-charts"
     targetRevision: 48.2.2
     chart: kube-prometheus-stack
+    
+    helm:
+      values: |
+        server:
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: nginx
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+            hosts:
+              - host: prometheus-devops.duckdns.org 
+                paths:
+                  - /
+            tls:
+              - secretName: prometheus-tls-secret
+                hosts:
+                  - prometheus-devops.duckdns.org 
+        
 
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true #to create a NameSpace if it doesn't exists
+  
 
-    automated:
-      selfHeal: true # automaticaly sync between git repo and desired state
-      prune: true # clean resources from the k8s that're not in git repo
-
+  
