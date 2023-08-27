@@ -25,10 +25,49 @@ DB:
     name: mysqldb
   username: m3del
   password: p@ssw0rd
+  root_password: root_pass
   containerport: "3306"
   serviceport: "3306"
+
 
 storageclass:
   name: "ebs-storage"
   accessmodes: ReadWriteOnce
   storage: 1Gi
+  provisioner: kubernetes.io/aws-ebs
+  reclaimPolicy: Delete
+  allowVolumeExpansion: true 
+  volumeBindingMode: WaitForFirstConsumer
+  type: gp2
+
+ingress:
+  name: go-app-ingress
+  host: go-app.duckdns.org
+  class: nginx
+  secretname: app-tls-secret
+
+clusterissuer: 
+  name: letsencrypt-prod
+  server: https://acme-v02.api.letsencrypt.org/directory
+
+env:
+  - name: MYSQL_USER
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: username
+  
+  - name: MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: password
+  
+  - name: MYSQL_ROOT_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: db-credentials
+        key: root_password
+      
+  - name:  MYSQL_DATABASE
+    value: "internship"

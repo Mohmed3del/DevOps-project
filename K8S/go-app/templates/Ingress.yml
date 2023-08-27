@@ -1,13 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{.Values.app.name}}-ingress
+  name: {{.Values.ingress.name}}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{.Values.ingress.class}} 
+  tls:
+    - hosts:
+        - {{.Values.ingress.host}}  # Replace with your domain
+      secretName: {{.Values.ingress.secretname}}
   rules:
-    - host: go-app.com
+    - host: {{.Values.ingress.host}}
       http:
         paths:
           - path: /
