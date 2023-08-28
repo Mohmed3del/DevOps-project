@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default # Change to your desired project
   source:
-    repoURL: https://github.com/nginxinc/kubernetes-ingress/
+    repoURL: oci://ghcr.io/nginxinc/charts/nginx-ingress
     targetRevision: v0.18.1 # Specify the desired chart version
     helm:
       parameters:
