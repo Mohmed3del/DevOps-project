@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default # Change to your desired project
   source:
-    rrepoURL: 'https://helm.nginx.com/stable'
+    repoURL: 'https://helm.nginx.com/stable'
     targetRevision: 'HEAD'
     chart: 'nginx-ingress'
     helm:
