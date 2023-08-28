@@ -6,8 +6,9 @@ metadata:
 spec:
   project: default # Change to your desired project
   source:
-    repoURL: oci://ghcr.io/nginxinc/charts/nginx-ingress
-    targetRevision: v0.18.1 # Specify the desired chart version
+    rrepoURL: 'https://helm.nginx.com/stable'
+    targetRevision: 'HEAD'
+    chart: 'nginx-ingress'
     helm:
       parameters:
         - name: controller.replicaCount
