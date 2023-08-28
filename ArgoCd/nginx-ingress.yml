@@ -6,8 +6,9 @@ metadata:
 spec:
   project: default # Change to your desired project
   source:
-    repoURL: 'https://helm.nginx.com/stable'
-    chart: 'nginx-ingress'
+    repoURL: https://helm.nginx.com/stable
+    chart: nginx/nginx-ingress
+    targetRevision: 0.18.1
     helm:
       parameters:
         - name: controller.replicaCount

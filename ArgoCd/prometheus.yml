@@ -12,11 +12,11 @@ spec:
 
   destination:
     namespace: monitoring
-    server: "https://kubernetes.default.svc"
+    server: https://kubernetes.default.svc
   source:
-    repoURL: "https://prometheus-community.github.io/helm-charts"
-    targetRevision: 48.2.2
-    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 23.4.0
+    chart: prometheus-community/prometheus
     
     helm:
       values: |
