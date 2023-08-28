@@ -13,6 +13,8 @@ spec:
       parameters:
         - name: controller.replicaCount
           value: "2"  # Change this value to your desired replica count
+        - name: controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-type"
+          value: "alb"  # Use "alb" for AWS ALB
 
   destination:
     server: https://kubernetes.default.svc
