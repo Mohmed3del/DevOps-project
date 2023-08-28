@@ -6,7 +6,7 @@ plugin:
   - pipeline
   - git
   - credentials
-  - ssh
+  # - ssh
   - email-ext
   - junit
   - ant
@@ -30,4 +30,4 @@ plugin:
   - cloudbees-folder
   - aws-credentials
   - amazon-ecr
-  - docker-workflow
+  # - docker-workflow
