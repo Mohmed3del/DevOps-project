@@ -9,9 +9,9 @@ spec:
     repoURL: https://github.com/nginxinc/kubernetes-ingress/
     targetRevision: v0.18.1 # Specify the desired chart version
     helm:
-    parameters:
-      - name: controller.replicaCount
-        value: "2"  # Change this value to your desired replica count
+      parameters:
+        - name: controller.replicaCount
+          value: "2"  # Change this value to your desired replica count
 
   destination:
     server: https://kubernetes.default.svc
