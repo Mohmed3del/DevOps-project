@@ -15,8 +15,8 @@ spec:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 23.4.0
-    chart: prometheus-community/prometheus
+    targetRevision: 49.0.0
+    chart: kube-prometheus-stack
     
     helm:
       values: |
@@ -38,4 +38,3 @@ spec:
 
   
 
-  
