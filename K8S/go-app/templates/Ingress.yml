@@ -4,7 +4,7 @@ metadata:
   name: {{.Values.ingress.name}}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: {{.Values.clusterissuer.name}}
 spec:
   ingressClassName: {{.Values.ingress.class}} 
   tls:
