@@ -9,7 +9,6 @@ spec:
     syncOptions:
       - CreateNamespace=true #to create a NameSpace if it doesn't exists
     automated: {}
-
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
