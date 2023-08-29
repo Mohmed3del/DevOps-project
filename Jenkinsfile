@@ -5,6 +5,7 @@ pipeline {
     GITURL= "github.com/Mohmed3del/Demo-DevOps-project.git"
     GITEMAIL = "mohmed.adel.188.2017@gmail.com"
     AC_ID = credentials("AC_ID")
+    duckdnstoken = credentials("duckdnstoken")
     GITBRANCH = "K8S_argoCD"
     APP_NAME = "${AC_ID}.dkr.ecr.us-east-1.amazonaws.com/go_app"
     RELEASE = "1.0.0"
@@ -33,6 +34,20 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                 sh """
                 aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster
+                kubectl -n app get secret ecr-secret || bash create_secret.sh
+                """
+                }
+            }
+        }
+        stage('Install Nginx Ingress controller  '){
+        steps {
+            withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                sh """
+                kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml
                 
                 """
                 }
@@ -48,12 +63,10 @@ pipeline {
                 
                 sh """
                     sed -i \"s/tag_app:.*/tag_app: ${IMAGE_TAG}/g\" K8S/go-app/values.yaml
-                    kubectl -n app get secret ecr-secret || bash create_secret.sh
+                    
                 """
             }
             }
-            // bash create_secret.sh
-            // sed -i 's#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app.*#889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app:1.3#g' K8S/Deployment.yml
         }
         
         stage("Push the changed deployment file to Git") {
@@ -69,7 +82,22 @@ pipeline {
                     """
                 }
             }
-        }    
+        }  
+        stage('get Ip from LB and Update Domains'){
+        steps {
+            
+                sh """
+                    sleep 300
+                    get_dns=$(kubectl -n ingress-nginx get svc ingress-nginx-controller --no-headers | awk '{print $4}')
+                    ip_addr=$(dig +short $get_dns |head -n 1)
+                    echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${duckdnstoken}&ip=${ip_addr}" | curl -K -
+                    echo url="https://www.duckdns.org/update?domains=go-app&token=${duckdnstoken}&ip=${ip_addr}" | curl -K -
+                    echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${duckdnstoken}&ip=${ip_addr}" | curl -K -
+
+                """
+                
+            }
+        }  
         stage('Install ArgoCD, Prometheus, Grafana, and Nginx controller ') {
             steps {
             withCredentials([[
