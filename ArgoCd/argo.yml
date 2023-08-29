@@ -13,7 +13,7 @@ spec:
       valueFiles:
         - values.yaml
       releaseName: go-app
-      chart: charts/go-app
+      
   destination:
     server: https://kubernetes.default.svc
     namespace: app
