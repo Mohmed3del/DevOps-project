@@ -85,8 +85,8 @@ pipeline {
                         sh """
                             kubectl create namespace argocd
                             kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-                            kubectl apply -f argocd.yml
-                            kubectl apply -f Ingress/
+                            kubectl apply -f K8S/argocd.yml
+                            kubectl apply -f K8S/Ingress/
 
                         """
                     }
