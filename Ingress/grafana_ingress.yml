@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod # Replace with your ClusterIssuer name
+    kubernetes.io/ingress.class: nginx  
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - grafana-devops.duckdns.org  # Replace with your domain
+      secretName: grafana-tls-secret
+  rules:
+    - host: grafana-devops.duckdns.org  # Replace with your domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: monitoring-grafana
+                port:
+                  number: 80          
