@@ -1,8 +1,8 @@
 app:
   name: go-app
   replicaCount: 2
-  minreplicas: 1
-  maxreplicas: 3
+  minreplicas: 2
+  maxreplicas: 5
   average_utilization: 70
   image:
     repo_app: 889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app
@@ -14,8 +14,8 @@ app:
 
 DB:
   replicaCount: 2
-  minreplicas: 1
-  maxreplicas: 3
+  minreplicas: 2
+  maxreplicas: 5
   average_utilization: 70
   name: mysql
   image:

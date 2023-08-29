@@ -21,7 +21,19 @@ spec:
       - image: {{.Values.app.image.repo_app}}:{{.Values.app.image.tag_app}}
         name: app
         ports:
-        - containerPort: 9090
+        - containerPort: {{.Values.app.containerport}}
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: {{.Values.app.containerport}}
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: {{.Values.app.containerport}}
+          initialDelaySeconds: 10
+          periodSeconds: 15
         env: 
         - name: MYSQL_PORT
           value: "3306"
