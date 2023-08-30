@@ -81,19 +81,25 @@ pipeline {
         }
         stage('Install ArgoCD, Prometheus, Grafana, and Nginx controller ') {
             steps {
-                script {
-                    def argocdInstalled = sh(script: 'kubectl get namespace argocd', returnStatus: true) == 0
-                    if (argocdInstalled) {
-                        echo "ArgoCD is already installed"
-                    } else {
-                        echo "Installing ArgoCD..."
-                        sh """
-                            kubectl create namespace argocd
-                            kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-                            kubectl apply -f K8S/argocd.yml
-                            kubectl apply -f K8S/Ingress/
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    script {
+                        def argocdInstalled = sh(script: 'kubectl get namespace argocd', returnStatus: true) == 0
+                        if (argocdInstalled) {
+                            echo "ArgoCD is already installed"
+                        } else {
+                            echo "Installing ArgoCD..."
+                            sh """
+                                kubectl create namespace argocd
+                                kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+                                kubectl apply -f K8S/argocd.yml
+                                kubectl apply -f K8S/Ingress/
 
-                        """
+                            """
+                        }
                     }
                 }
 
@@ -101,16 +107,22 @@ pipeline {
         }
         stage('get Ip from LB and Update Domains') {
             steps {
-                script {
-                    def get_dns = sh(script: "kubectl -n ingress-nginx get svc ingress-nginx-controller --no-headers | awk '{print \$4}'", returnStdout: true).trim()
-                    def ip_addr = sh(script: "dig +short $get_dns | head -n 1", returnStdout: true).trim()
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    script {
+                        def get_dns = sh(script: "kubectl -n ingress-nginx get svc ingress-nginx-controller --no-headers | awk '{print \$4}'", returnStdout: true).trim()
+                        def ip_addr = sh(script: "dig +short $get_dns | head -n 1", returnStdout: true).trim()
 
-                    sh """
-                        echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                        echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
-                        echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                        echo url="https://www.duckdns.org/update?domains=grafana-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                    """
+                        sh """
+                            echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                            echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
+                            echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                            echo url="https://www.duckdns.org/update?domains=grafana-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                        """
+                    }
                 }
             }
         }
