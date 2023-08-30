@@ -47,7 +47,7 @@ pipeline {
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh """
-                    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml
+                    kubectl -n ingress-nginx get svc ingress-nginx-controller ||  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml
 
                     """
                 }
@@ -96,7 +96,7 @@ pipeline {
                                 kubectl create namespace argocd
                                 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
                                 kubectl apply -f K8S/argocd.yml
-                                kubectl apply -f K8S/Ingress/
+                                
 
                             """
                         }
@@ -121,6 +121,7 @@ pipeline {
                             echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
                             echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
                             echo url="https://www.duckdns.org/update?domains=grafana-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                            kubectl apply -f K8S/Ingress/
                         """
                     }
                 }
