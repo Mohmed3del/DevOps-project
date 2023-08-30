@@ -28,16 +28,16 @@ pipeline {
         stage('Update kube and create docker-secret'){
             steps {
                 withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'aws-creds-id',
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    sh """
-                    aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster
-                    kubectl -n app get secret ecr-secret || bash create_secret.sh
-                    """
-                        }
-            }
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-creds-id',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh  """
+                        aws eks update-kubeconfig --region us-east-1 --name DevOps_eks_cluster
+                        kubectl -n app get secret ecr-secret || bash create_secret.sh
+                        """
+                    }
+                }
         }
         stage('Install Nginx Ingress controller  '){
             steps {
@@ -94,22 +94,22 @@ pipeline {
 
             }
         }
-        stage('get Ip from LB and Update Domains'){
-        steps {
+        stage('get Ip from LB and Update Domains') {
+            steps {
+                script {
+                    def get_dns = sh(script: "kubectl -n ingress-nginx get svc ingress-nginx-controller --no-headers | awk '{print \$4}'", returnStdout: true).trim()
+                    def ip_addr = sh(script: "dig +short $get_dns | head -n 1", returnStdout: true).trim()
 
-                sh """
-                    sleep 200
-                    get_dns=$(kubectl -n ingress-nginx get svc ingress-nginx-controller --no-headers | awk '{print $4}')
-                    ip_addr=$(dig +short $get_dns |head -n 1)
-                    echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                    echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                    echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                    echo url="https://www.duckdns.org/update?domains=grafana-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-
-                """
-
+                    sh """
+                        echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                        echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
+                        echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                        echo url="https://www.duckdns.org/update?domains=grafana-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                    """
+                }
             }
         }
+
 
     }
 }
