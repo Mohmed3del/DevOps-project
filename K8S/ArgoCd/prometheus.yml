@@ -16,6 +16,23 @@ spec:
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 49.0.0
     chart: kube-prometheus-stack
+    helm:
+      values: |
+        server:
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: nginx
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+            hosts:
+              - host: prometheus-devops.duckdns.org 
+                paths:
+                  - /
+            tls:
+              - secretName: prometheus-tls-secret
+                hosts:
+                  - prometheus-devops.duckdns.org 
+        
   
   
 
