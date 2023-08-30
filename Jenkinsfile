@@ -114,8 +114,14 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     script {
                         def get_dns = sh(script: "kubectl -n ingress-nginx get svc ingress-nginx-controller --no-headers | awk '{print \$4}'", returnStdout: true).trim()
-                        def ip_addr = sh(script: "dig +short $get_dns | head -n 1", returnStdout: true).trim()
-
+                        def ip_addr = null
+                        
+                        while (ip_addr == null || ip_addr.isEmpty()) {
+                            ip_addr = sh(script: "dig +short $get_dns | head -n 1", returnStdout: true).trim()
+                            if (ip_addr.isEmpty()) {
+                                sleep 30  // Wait for 30 seconds before trying again
+                            }
+                        }
                         sh """
                             echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
                             echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
