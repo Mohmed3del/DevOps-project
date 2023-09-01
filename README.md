@@ -3,7 +3,7 @@
 
 ## Diagram of Project
 
-![Diagram of Project](screenshots/DevOps_Diagram.png)
+![Diagram of Project](screenshots/DevOpsDiagram.png)
 ## GitHub Branches
 
 main branch containes:
