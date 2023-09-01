@@ -1,5 +1,9 @@
 # Demo-DevOps-project
 
+
+## Diagram of Project
+
+![Diagram of Project](screenshots/DevOps_Diagram.png)
 ## GitHub Branches
 
 main branch containes:
