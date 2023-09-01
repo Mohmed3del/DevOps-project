@@ -136,4 +136,12 @@ pipeline {
 
 
     }
+    post{
+        failure{
+            slackSend (channel:"jenkins", color:"#FF0000", message:"FAILED: job '${JOB_NAME} [${BUILD_ID}]' (${BUILD_URL})")
+        }
+        success{
+            slackSend (channel:"jenkins", color:"#00FF00", message:"SUCCEEDED: job '${JOB_NAME} [${BUILD_ID}]' (${BUILD_URL})")
+        }
+    }
 }
