@@ -79,7 +79,7 @@ pipeline {
                 }
             }
         }
-        stage('Install ArgoCD, Prometheus, Grafana, and Nginx controller ') {
+        stage('Install ArgoCD and Run argocd file to install apps ') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
