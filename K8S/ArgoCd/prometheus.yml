@@ -5,17 +5,18 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true #to create a NameSpace if it doesn't exists
-    automated: {}
-  destination:
-    namespace: monitoring
-    server: https://kubernetes.default.svc
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 50.0.0
     chart: kube-prometheus-stack
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true #to create a NameSpace if it doesn't exists
+    automated: {}
     
   
 
