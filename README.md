@@ -4,6 +4,7 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [K8S Diagram](#k8s-diagram)
 - [Project Structure](#project-structure)
 - [Key Features](#key-features)
 - [Technologies Used](#technologies-used)
@@ -18,6 +19,9 @@ Welcome to the `K8S_argoCD` branch of the Demo DevOps Project! This branch is th
 Whether you are a developer, a seasoned system administrator, or a passionate DevOps practitioner, this branch offers an insightful hands-on experience in orchestrating the deployment of applications and services within a Kubernetes environment using ArgoCD.
 
 
+## K8S Diagram
+
+![K8S Diagram](main/screenshots/K8S.drawio.png)
 ## Project Structure
 
 Here's an overview of the directory structure within the `K8S_argoCD` branch:
