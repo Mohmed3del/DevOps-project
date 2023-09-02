@@ -1,22 +1,25 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring
+  name: kube-prometheus
   namespace: argocd
+  annotations:
+    recipients.argocd-notifications.argoproj.io: "slack:jenkins"
 spec:
-  project: default
-  source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 48.2.2
-    chart: kube-prometheus-stack
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
-  
+  project: monitoring
+  source:
+    directory:
+      jsonnet:
+        libs:
+          - vendored
+      recurse: true
+    path: examples/continuous-delivery/argocd/kube-prometheus
+    repoURL: git@github.com:prometheus-operator/kube-prometheus.git
+    targetRevision: HEAD
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true #to create a NameSpace if it doesn't exists
     automated: {}
-    
-  
-
+---
