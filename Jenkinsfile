@@ -63,8 +63,7 @@ pipeline {
             }
         }
 
-    
-
+        // build Docker image
         stage('Build Docker Image') {
             steps {
                 dir('./app'){
