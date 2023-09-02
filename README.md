@@ -21,7 +21,7 @@ Whether you are a developer, a seasoned system administrator, or a passionate De
 
 ## K8S Diagram
 
-![K8S Diagram](main/screenshots/K8S.drawio.png)
+![K8S Diagram](../main/screenshots/K8S.drawio.png)
 ## Project Structure
 
 Here's an overview of the directory structure within the `K8S_argoCD` branch:
