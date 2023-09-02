@@ -1,110 +1,172 @@
-# Demo-DevOps-project
+# Demo DevOps Project
 
+## Overview
+
+Welcome to the Demo DevOps Project! This project showcases the power of DevOps principles and modern technologies in automating infrastructure deployment and managing containerized applications. Whether you're a developer, system administrator, or DevOps enthusiast, this project offers valuable insights and a hands-on experience in building, deploying, and managing applications in a cloud-native environment.
+
+## Table of Contents
+
+- [Diagram of Project](#[diagram-of-project])
+- [Project Features](#project-features)
+- [Technologies Used](#technologies-used)
+- [GitHub Branches](#github-branches)
+- [Prerequisites](#prerequisites)
+- [Installation and Configuration](#installation-and-configuration)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
 ## Diagram of Project
 
 ![Diagram of Project](screenshots/DevOpsDiagram.png)
+
+## Project Features
+
+- **Infrastructure as Code (IaC):** Utilizes Terraform to define and provision infrastructure on AWS, including VPC, subnets, EC2 instances, EKS clusters, and more.
+
+- **Automation with Ansible:** Automates the installation and configuration of essential tools like Jenkins, SonarQube, Docker, kubectl, Helm, and more using Ansible playbooks and roles.
+
+- **Containerization:** Leverages Docker for containerization, ensuring application portability and consistency across environments.
+
+- **Continuous Integration/Continuous Deployment (CI/CD):** Employs Jenkins for CI/CD pipelines, enabling automated builds, testing, and deployments.
+
+- **Security Scanning:** Integrates Trivy to scan Docker images for vulnerabilities, enhancing the security posture of containerized applications.
+
+- **Kubernetes Orchestration:** Utilizes Kubernetes (EKS) for container orchestration, simplifying application deployment and scaling.
+
+- **Monitoring and Observability:** Incorporates Prometheus and Grafana for real-time monitoring and visualization of infrastructure and application metrics.
+
+- **SSL/TLS Certificates:** Implements Let's Encrypt and Cert Manager for automated SSL/TLS certificate management, ensuring secure communication.
+
+- **GitOps with ArgoCD:** Employs ArgoCD for GitOps-style continuous delivery, allowing declarative application deployments and Git-driven workflows.
+
+## Technologies Used
+
+
+- Infrastructure as Code: Terraform
+
+- Configuration Management: Ansible
+
+- Continuous Integration: Jenkins
+
+- Containerization: Docker
+
+- Kubernetes Orchestration: Amazon EKS
+
+- Security Scanning: Trivy
+
+- Observability: Prometheus, Grafana
+
+- SSL/TLS Management: Let's Encrypt, Cert Manager
+
+- GitOps: ArgoCD
+
+- Ingress Controller: NGINX Ingress
+
 ## GitHub Branches
 
-main branch containes:
+This repository is organized into three branches, each focusing on specific aspects of the DevOps pipeline:
 
-- Bash script which uses Ansible and Terraform for configuring and building infrastructure on AWS
-- Terraform code which contains 4 models and use them to build the infrastructure on AWS
-- Ansible code which contains 4 roles and uses them to Configure the infrastructure on AWS
+### `main` Branch
 
-jenkins_CI branch contains:
 
-- go source code
-- Dockerfile to build docker image from this source code
-- Jenkinsfile for Continuous integration pipeline
-- Docker Compose
+- **Infrastructure as Code (IaC):** This branch houses a Bash script that orchestrates the deployment and configuration of AWS infrastructure using Terraform and Ansible.
 
-K8S_argoCD branch contains:
+- **Infrastructure Components:** Four Terraform modules define AWS infrastructure elements, and Ansible roles configure these components.
 
-- Kubernetes YAML files (go app , mysql , Nginx ingress, ArgoCD)
-- Jenkinsfile for Continuous Delivery pipeline
-- Bash script that the Jenkinsfile will use to deploy Prometheus, Grafana and ArgoCD
+### `jenkins_CI` Branch
 
-## Prequsits
 
-- AWS account
-- awscli configured
-- Terraofmr and Ansible installed
-- GitHub account
-- Slack account
+- **Continuous Integration (CI):** This branch centers on CI practices.
 
-## Installed Jenkins Plugins:
+- **Go Application:** Includes Go source code for a specific application.
 
-Note: this plugins is installed using Plugin Installation Manager by Ansible inside the python code
+- **Dockerization:** Utilizes a Dockerfile to build a Docker image from the Go source code.
 
-- SonarQube Scanner for Jenkins
-- Slack Notification Plugin
-- Build Timestamp Plugin
-- cloudbees-folder
-- aws-credentials
-- amazon-ecr
-- docker-workflow
+- **Jenkins Integration:** The Jenkinsfile defines the CI pipeline using Jenkins.
 
-### Frok this repo
+- **Container Orchestration:** Docker Compose configurations enable running the application and its dependencies via Docker.
+
+### `K8S_argoCD` Branch
+
+- **Continuous Delivery (CD):** The `K8S_argoCD` branch is the epicenter of Continuous Delivery (CD) within this project. It accentuates the deployment facet of the DevOps pipeline with an unwavering focus on Kubernetes.
+
+- **Kubernetes Deployment:** Nestled within this branch lies an exquisitely crafted Helm Chart. This Helm Chart is engineered to seamlessly deploy your Go application and MySQL database within a Kubernetes cluster. It deftly orchestrates the setup of your core application components.
+
+- **ArgoCD YAML Files:** This specific section of the branch plays host to the ArgoCD YAML files. These YAML files align with the "App of Apps" theory and serve as a blueprint for ArgoCD. They empower ArgoCD to expertly manage and orchestrate the deployment of a multitude of applications and services across your Kubernetes cluster. These files encapsulate the desired state of your entire ecosystem.
+
+- **CD Pipeline:** At the helm of this Kubernetes performance stands the `Jenkinsfile`. It is the conductor of your Continuous Delivery pipeline, ensuring each note is played to perfection. It expertly orchestrates the journey, from code changes to application deployments, all carried out with precision.
+
+- **Bash Script:** When it comes to dealing with Docker secrets, the `Jenkinsfile` beckons a Bash script into action. This script adds an additional layer of security to your deployments, diligently safeguarding sensitive information.
+
+This branch represents the zenith of your Continuous Delivery journey, focusing on your core application (Go and MySQL) while expertly orchestrating various services across your Kubernetes cluster. This is achieved through ArgoCD's "App of Apps" paradigm, offering unparalleled control and efficiency.
+ 
+
+## Prerequisites
+
+Before embarking on this project, ensure you've laid the necessary groundwork:
+
+
+- An AWS account with appropriate permissions to create resources.
+
+- Installation of Terraform and Ansible, tools instrumental in orchestrating the infrastructure.
+
+- A GitHub account, facilitating version control and collaboration.
+
+- Access to a Slack account for communication and notifications.
+
+Additionally, we recommend adhering to these vital steps before launching the Bash script:
+
+
+1. Domain Name Customization: Personalize the domain names within the Terraform configurations to align with your specific requirements.
+
+2. Token Exportation: Export the token essential for your DNS provider (e.g., DuckDNS) as an environment variable using the command `export TF_duckdnstoken=<your token in DuckDNS account>`.
+
+3. Configuration Verification: Ensure meticulous configuration of variables or settings, with special attention to Let's Encrypt certificate generation within Ansible.
+
+
+## Installation and Configuration
+
+### Fork this Repo
 
 Fork the repository by clicking the "Fork" button on the top right corner of this page. This will create a copy of the repository under your GitHub account.
 
-### Clon this repo
+### Clone this Repo
 
 Clone the forked repository to your local machine using the following command:
 
-```
+```bash
 git clone https://github.com/<your-username>/Demo-DevOps_project.git
 ```
+Change the working directory to the cloned repo, then run the Bash script to build the infrastructure:
 
-change the working directory to the cloned repo then run the Bash script to build the infrastructure
-
-```
+```bash
 cd Demo-DevOps_project
-bash inrasturucture.sh
+bash infrastructure.sh
 ```
 
-Enter number 3 to Build and Configure Inrastructure in AWS
+Choose option 3 to Build and Configure Infrastructure in AWS.
+## Usage
 
-#### on Jenkins:
 
-- Create Credentials:
-  - awslogin => type: AWS Credentials
-  - githublogin => type: ssh username with privatekey
-  - sonartoken => type: secret text
-  - slacktoken => type: secret text
-- Configure Global tools:
-  - SonarQube Scanner => Name: sonarscanner , check mark "Install automatically"
-- Configure System:
-  - Slack => Workspace: the workspace that has Jenkins CI , Credential: slacktoken , Default channel: the channel selected for Jenkins CI
-  - SonarQube servers => check mark "Environment variables" , Name: sonarserver , Server URL: http://{your sonarqube server ip}:9000 , Server authentication token: sonartoken
-- Create Pipeline and check mark "GitHub hook trigger for GITScm polling", choose the pipeline to be from SCM, then fork my repo branch jenkins_CI and use it as Repository URL
+1. Follow the installation and configuration steps mentioned above.
 
-#### run the pipeline manauly, it will abort due to a SonarQube webhook not being configured
+2. Set up the required credentials and configurations in Jenkins, including AWS, GitHub, SonarQube, and Slack.
 
-#### on SonarQube:
+3. Create a Jenkins pipeline by specifying the Repository URL of your forked repository's `jenkins_CI` branch.
 
-- From projects select devops_project
-- From project settings select configure webhook then create a webhook with anyname and the url: http://{your jenkins private ip}:8080/sonarqube-webhook
+4. Run the pipeline manually, and it will guide you through the setup, including the SonarQube webhook configuration.
 
-#### on github
+5. Configure the SonarQube webhook within the SonarQube project settings, directing it to your Jenkins server's domain (e.g., `https://jenkins-devops.duckdns.org/sonarqube-webhook/`).
 
-- create a webhook from the forked repo to your jenkins ip (http://{your jenkins ip}/github-webhook/)
+6. Within your GitHub repository's settings, establish a webhook directing to your Jenkins server's domain (`https://jenkins-devops.duckdns.org/webhook-github/`).
 
-#### on Jenkins Server
+7. Continue with the requisite configurations on SonarQube, GitHub, ECR, and Slack, all thoughtfully outlined within the project's comprehensive documentation.
 
-![Devops_ci_pipline](screenshots/DevOps-ci.png)
+## Contributing
 
-![Devops_cd_pipline](screenshots/DevOps-cd.png)
+Your contributions are immensely valuable to us and the wider community. Do not hesitate to open issues, submit pull requests, or provide feedback. Together, we can enhance and expand this DevOps project, fostering a vibrant and collaborative ecosystem.
 
-#### on Sonarqube Server
 
-![sonarqube](screenshots/sonarqube.png)
 
-#### on ECR
 
-![ECR](screenshots/ecr.png)
 
-#### on Slack
-
-![slack](screenshots/slack.png)
