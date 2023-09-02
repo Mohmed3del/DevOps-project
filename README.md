@@ -156,9 +156,9 @@ Choose option 3 to Build and Configure Infrastructure in AWS.
 
 4. Run the pipeline manually, and it will guide you through the setup, including the SonarQube webhook configuration.
 
-5. Configure the SonarQube webhook within the SonarQube project settings, directing it to your Jenkins server's domain (e.g., `https://jenkins-devops.duckdns.org/sonarqube-webhook/`).
+5. Configure the SonarQube webhook within the SonarQube project settings, directing it to your Jenkins server's domain (e.g., `https://<your domain>/sonarqube-webhook/`).
 
-6. Within your GitHub repository's settings, establish a webhook directing to your Jenkins server's domain (`https://jenkins-devops.duckdns.org/webhook-github/`).
+6. Within your GitHub repository's settings, establish a webhook directing to your Jenkins server's domain (`https://<your domain>/github-webhook/`).
 
 7. Continue with the requisite configurations on SonarQube, GitHub, ECR, and Slack, all thoughtfully outlined within the project's comprehensive documentation.
 
