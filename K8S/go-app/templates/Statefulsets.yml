@@ -25,10 +25,10 @@ spec:
         resources:
           requests:
             cpu: {{.Values.DB.CPU.Min}}
-            memory: {{.Values.DB.Memory.Min}}
+            
           limits:
             cpu: {{.Values.DB.CPU.Max}}
-            memory: {{.Values.DB.Memory.Max}}        
+                    
         volumeMounts:
         - name: {{.Values.DB.volumeclaimtemplates.name}}
           mountPath: {{.Values.DB.volumemount.Path}}

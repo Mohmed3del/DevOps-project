@@ -62,9 +62,6 @@ DB:
   CPU: 
     Min: 250m
     Max: 400m
-  Memory:
-    Min: 150Mi
-    Max: 250Mi
 
 
 storageclass:
