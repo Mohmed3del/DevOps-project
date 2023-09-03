@@ -91,16 +91,19 @@ pipeline {
             }
         }
     }
-        stage('Push to ECR') {
+        stage('Push to ECR and Remove Images') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-creds-id',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])  {
-                        script {
+                    script {
 
-                            sh "docker push $DOCKER_IMAGE:$IMAGE_TAG"
+                        sh """
+                        docker push $DOCKER_IMAGE:$IMAGE_TAG
+                        docker rmi -f $(docker images -a -q)
+                        """
                     }
                 }
             }
