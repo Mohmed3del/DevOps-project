@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 48.2.2
+    targetRevision: 50.0.0
     chart: kube-prometheus-stack
   destination:
     namespace: monitoring
@@ -15,6 +15,7 @@ spec:
   
   syncPolicy:
     syncOptions:
+      - ServerSideApply=true
       - CreateNamespace=true #to create a NameSpace if it doesn't exists
     automated: {}
     
