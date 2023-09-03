@@ -102,7 +102,7 @@ pipeline {
 
                         sh """
                         docker push $DOCKER_IMAGE:$IMAGE_TAG
-                        docker rmi -f ${(docker images -a -q)}
+                        docker rmi $DOCKER_IMAGE:$IMAGE_TAG
                         """
                     }
                 }
