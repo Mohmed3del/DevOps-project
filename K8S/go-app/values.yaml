@@ -35,6 +35,10 @@ app:
 
     - name: MYSQL_DATABASE
       value: "inernship"
+    
+    - name: MYSQL_HOST
+      value: mysql-headless
+      
 
 
 DB:

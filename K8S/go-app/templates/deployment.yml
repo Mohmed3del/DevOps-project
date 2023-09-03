@@ -42,8 +42,4 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 15
         env: {{ .Values.app.env | toYaml | nindent 8 }}
-        
-        - name: MYSQL_HOST
-          value: {{.Values.DB.name}}-headless
-      
-         
+  
