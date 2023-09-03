@@ -60,11 +60,11 @@ DB:
   containerport: "3306"
   serviceport: "3306"
   CPU: 
-    Min: 100m
-    Max: 200m
+    Min: 250m
+    Max: 400m
   Memory:
-    Min: 50Mi
-    Max: 100Mi
+    Min: 150Mi
+    Max: 250Mi
 
 
 storageclass:
