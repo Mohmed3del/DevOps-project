@@ -39,7 +39,7 @@ pipeline {
                     }
                 }
         }
-        stage('Install Nginx Ingress controller  '){
+        stage('Install Nginx Ingress controller and Metrics Server'){
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
@@ -48,7 +48,7 @@ pipeline {
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh """
                     kubectl -n ingress-nginx get svc ingress-nginx-controller ||  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml
-
+                    kubectl get deployment metrics-server -n kube-system || kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
                     """
                 }
 
