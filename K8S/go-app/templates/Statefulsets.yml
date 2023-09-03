@@ -22,13 +22,6 @@ spec:
         
         ports:
         - containerPort: {{.Values.DB.containerport}}
-        resources:
-          requests:
-            cpu: {{.Values.DB.CPU.Min}}
-            
-          limits:
-            cpu: {{.Values.DB.CPU.Max}}
-                    
         volumeMounts:
         - name: {{.Values.DB.volumeclaimtemplates.name}}
           mountPath: {{.Values.DB.volumemount.Path}}

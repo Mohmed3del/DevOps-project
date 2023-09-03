@@ -22,13 +22,6 @@ spec:
         name: app
         ports:
         - containerPort: {{.Values.app.containerport}}
-        resources:
-          requests:
-            cpu: {{.Values.app.CPU.Min}}
-            memory: {{.Values.app.Memory.Min}}
-          limits:
-            cpu: {{.Values.app.CPU.Max}}
-            memory: {{.Values.app.Memory.Max}}
         readinessProbe:
           httpGet:
             path: /healthcheck
