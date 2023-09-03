@@ -90,8 +90,9 @@ volumes:
    docker-compose up
    ```
    This command starts the application in a Docker container, and you can access it at 
-`http://localhost:9090`
+`http://localhost:9090/healthcheck`
 
+I test Docker Compose on EC2
 ![Docker compose](../main/screenshots/docker-compose.png)
 
 Please note that these instructions provide a high-level overview. Adjust the steps and details based on your specific environment and requirements.
