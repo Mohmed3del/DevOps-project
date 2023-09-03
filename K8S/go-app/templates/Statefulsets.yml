@@ -20,13 +20,18 @@ spec:
         name: {{.Values.DB.name}}
         env: {{ .Values.env | toYaml | nindent 8 }}
         
-      
-        
         ports:
-        - containerPort: 3306
+        - containerPort: {{.Values.DB.containerport}}
+        resources:
+          requests:
+            cpu: {{.Values.DB.CPU.Min}}
+            memory: {{.Values.DB.Memory.Min}}
+          limits:
+            cpu: {{.Values.DB.CPU.Max}}
+            memory: {{.Values.DB.Memory.Max}}        
         volumeMounts:
         - name: {{.Values.DB.volumeclaimtemplates.name}}
-          mountPath: /var/lib/mysql
+          mountPath: {{.Values.DB.volumemount.Path}}
   volumeClaimTemplates:
   - metadata:
       name: {{.Values.DB.volumeclaimtemplates.name}}
