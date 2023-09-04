@@ -26,22 +26,7 @@ pipeline {
                 git branch: 'jenkins_CI', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
             }
         }
-        // stage('Build Code') {
-        //     steps {
-        //         // Change to the app directory before building
-        //         dir('app') {
-        //             sh 'go build -v ./...'
-        //         }
-        //     }
-        // }
-        // stage('Test Code') {
-        //     steps {
-        //         // Change to the app directory before testing
-        //         dir('app') {
-        //             sh 'go test -v ./...'
-        //         }
-        //     }
-        // }
+    
 
         stage('Code Analysis') {
             
