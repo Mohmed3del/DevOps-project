@@ -16,7 +16,7 @@
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/sites-available/{{ domain_hostname }}
-    
+  register: config
 
 
 - name: Enable Nginx site
@@ -45,7 +45,7 @@
   command: #"certbot certonly --standalone -d {{ domain_hostname }} --register-unsafely-without-email --agree-tos --force-renewal"
     "certbot --nginx -d {{ domain_hostname }}   --register-unsafely-without-email --agree-tos --force-renewal"
   ignore_errors: true
-  when: cert_stats.stat.exists == False
+  when: cert_stats.stat.exists == True
   # notify:
   #   - restart nginx
 
