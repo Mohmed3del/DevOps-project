@@ -6,7 +6,7 @@ app:
   average_utilization: 70
   image:
     repo_app: 889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app
-    tag_app: 1.0.0-5
+    tag_app: 1.0.0-1
   containerport: "9090"
   serviceport: "80"
   Docker_secret: ecr-secret
