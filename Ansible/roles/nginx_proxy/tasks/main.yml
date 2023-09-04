@@ -10,12 +10,13 @@
       - nginx
       - certbot
       - python3-certbot-nginx
+  register: tools
 
 - name: Configure Nginx for  reverse proxy
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/sites-available/{{ domain_hostname }}
-  register: config  
+    
 
 
 - name: Enable Nginx site
@@ -28,7 +29,7 @@
   systemd:
     name: nginx
     state: restarted
-  when: config.changed  
+  when: tools.changed  
 
 - name: Stop nginx service
   systemd:
