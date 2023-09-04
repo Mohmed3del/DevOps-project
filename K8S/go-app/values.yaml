@@ -76,7 +76,7 @@ storageclass:
 
 ingress:
   name: go-app-ingress
-  host: go-app.duckdns.org # Replace with your domain
+  host: go-devops.duckdns.org # Replace with your domain
   class: nginx
   secretname: app-tls-secret
 

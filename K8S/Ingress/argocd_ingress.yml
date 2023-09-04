@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: argocd-devops.duckdns.org
+  - host: argo-cd-devops.duckdns.org
     http:
       paths:
       - path: /
