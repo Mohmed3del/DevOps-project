@@ -144,7 +144,7 @@ git clone https://github.com/<your-username>/DevOps_project.git
 Change the working directory to the cloned repo, then run the Bash script to build the infrastructure:
 
 ```bash
-cd DevOps_project
+cd DevOps-project
 bash infrastructure.sh
 ```
 
