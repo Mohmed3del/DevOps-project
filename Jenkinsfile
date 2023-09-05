@@ -23,7 +23,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Check out the source code from Git
-                git branch: 'jenkins_CI', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
+                git branch: 'jenkins_CI', url: 'https://github.com/Mohmed3del/DevOps-project.git'
             }
         }
     
