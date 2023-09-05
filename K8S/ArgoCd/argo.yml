@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Mohmed3del/Demo-DevOps-project.git
+    repoURL: https://github.com/Mohmed3del/DevOps-project.git
     targetRevision: K8S_argoCD
     path: K8S/go-app
     helm:
