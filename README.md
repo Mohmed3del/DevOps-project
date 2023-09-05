@@ -1,4 +1,4 @@
-# Demo DevOps Project - K8S_argoCD Branch
+# DevOps Project - K8S_argoCD Branch
 
 
 ## Table of Contents
@@ -9,12 +9,15 @@
 - [Key Features](#key-features)
 - [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
+- [ArgoCD and Grafana Secrets](#argocd-and-grafana-secrets)
+    - [ArgoCD Initial Admin Password](#argocd-initial-admin-password)
+    - [Grafana Admin Password](#grafana-admin-password)
 - [Usage](#usage)
 - [Contributing](#contributing)
 
 ## Overview
 
-Welcome to the `K8S_argoCD` branch of the Demo DevOps Project! This branch is the epicenter of Continuous Delivery (CD) within our comprehensive DevOps pipeline. Here, we underscore the deployment aspect of our project with a strong emphasis on Kubernetes orchestration and GitOps principles. 
+Welcome to the `K8S_argoCD` branch of the DevOps Project! This branch is the epicenter of Continuous Delivery (CD) within our comprehensive DevOps pipeline. Here, we underscore the deployment aspect of our project with a strong emphasis on Kubernetes orchestration and GitOps principles. 
 
 Whether you are a developer, a seasoned system administrator, or a passionate DevOps practitioner, this branch offers an insightful hands-on experience in orchestrating the deployment of applications and services within a Kubernetes environment using ArgoCD.
 
@@ -86,15 +89,36 @@ To begin using this branch effectively, follow these steps:
 1. Clone the repository to your local machine:
 
 ```bash
-git clone -b K8S_argoCD https://github.com/Mohmed3del/Demo-DevOps-project.git
+git clone -b K8S_argoCD https://github.com/Mohmed3del/DevOps-project.git
 ```
 2. Change your working directory to the K8S_argoCD branch:
 
 ```bash
-cd Demo-DevOps-project
+cd DevOps-project
 ```
 
 3. Explore the subdirectories and files to understand the structure and resources dedicated to Kubernetes deployment and ArgoCD orchestration.
+
+## ArgoCD and Grafana Secrets
+
+Before you can access ArgoCD and Grafana, you'll need to retrieve the necessary secrets. Follow these steps:
+
+### ArgoCD Initial Admin Password
+
+To get the initial admin password for ArgoCD, run the following command:
+
+```shell
+kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+```
+This command decodes and displays the password for the initial admin user of ArgoCD.
+
+### Grafana Admin Password
+To obtain the Grafana admin password, execute the following command:
+
+```bash
+kubectl get secret -n monitoring monitoring-grafana -o jsonpath='{.data.admin-password}' | base64 -d
+```
+This command decodes and displays the admin password for Grafana.
 
 ## Usage
 Incorporate this branch into your DevOps workflow to efficiently manage and deploy applications and services within a Kubernetes cluster using ArgoCD. Customize the Helm Chart, adjust the ArgoCD YAML files, and configure the CD pipeline to align with your specific project requirements.
