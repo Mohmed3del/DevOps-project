@@ -177,3 +177,6 @@ Your contributions are immensely valuable to us and the wider community. Do not 
 
 
 
+
+[![Project Views](https://hits.dwyl.com/Mohmed3del/DevOps-project.svg?style=flat-square)](https://hits.dwyl.com/Mohmed3del/DevOps-project)
+[![Github](https://img.shields.io/github/followers/Mohmed3del?label=Follow&style=social)](https://github.com/Mohmed3del) 
