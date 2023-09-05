@@ -5,7 +5,7 @@
 Welcome to the Demo DevOps Project! This project showcases the power of DevOps principles and modern technologies in automating infrastructure deployment and managing containerized applications. Whether you're a developer, system administrator, or DevOps enthusiast, this project offers valuable insights and a hands-on experience in building, deploying, and managing applications in a cloud-native environment.
 
 ## Table of Contents
-
+- [Video Demo](#video-demo)
 - [Diagram of Project](#diagram-of-project)
 - [Project Features](#project-features)
 - [Technologies Used](#technologies-used)
@@ -14,6 +14,9 @@ Welcome to the Demo DevOps Project! This project showcases the power of DevOps p
 - [Installation and Configuration](#installation-and-configuration)
 - [Usage](#usage)
 - [Contributing](#contributing)
+
+## Video Demo
+[![Video](https://www.example.com/thumbnail-image.jpg)](https://drive.google.com/file/d/1rSPkdBhXljRm_ifRIrxA9_dfAiidgbnT/preview)
 
 ## Diagram of Project
 
