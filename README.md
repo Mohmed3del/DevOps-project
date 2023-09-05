@@ -18,6 +18,7 @@ Welcome to the Demo DevOps Project! This project showcases the power of DevOps p
 
 ## Video Demo
 [![Click to Watch the Video](https://your-image-thumbnail-url.jpg)](https://drive.google.com/file/d/1rSPkdBhXljRm_ifRIrxA9_dfAiidgbnT/view?usp=sharing)
+[![Video Title](https://drive.google.com/uc?export=download&id=your-video-id)](https://drive.google.com/file/d/1rSPkdBhXljRm_ifRIrxA9_dfAiidgbnT/preview)
 
 
 ## Diagram of Project
