@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    GITURL= "github.com/Mohmed3del/Demo-DevOps-project.git"
+    GITURL= "github.com/Mohmed3del/DevOps-project.git"
     GITEMAIL = "mohmed.adel.188.2017@gmail.com"
     AC_ID = credentials("AC_ID")
     DUCKDNSTOKEN = credentials("duckdnstoken")
@@ -21,7 +21,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Check out the source code from Git
-                git branch: 'K8S_argoCD', url: 'https://github.com/Mohmed3del/Demo-DevOps-project.git'
+                git branch: 'K8S_argoCD', url: 'https://github.com/Mohmed3del/DevOps-project.git'
             }
         }
 
