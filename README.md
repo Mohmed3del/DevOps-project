@@ -15,6 +15,7 @@ Welcome to the Demo DevOps Project! This project showcases the power of DevOps p
 - [Usage](#usage)
 - [Contributing](#contributing)
 
+
 ## Video Demo
 [![Click to Watch the Video](https://your-image-thumbnail-url.jpg)](https://drive.google.com/file/d/1rSPkdBhXljRm_ifRIrxA9_dfAiidgbnT/view?usp=sharing)
 
