@@ -21,7 +21,7 @@ Welcome to the Demo DevOps Project! This project showcases the power of DevOps p
 <html>
 <body>
 <iframe src="https://drive.google.com/file/d/1rSPkdBhXljRm_ifRIrxA9_dfAiidgbn/preview"><iframe>
-
+<iframe allowfullscreen="allowfullscreen" src="https://drive.google.com/file/d/1rSPkdBhXljRm_ifRIrxA9_dfAiidgbn/preview"" ></iframe>
 </body>
 </html>
 ## Diagram of Project
