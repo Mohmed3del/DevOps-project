@@ -1,8 +1,8 @@
-# Demo DevOps Project
+# DevOps Project
 
 ## Overview
 
-Welcome to the Demo DevOps Project! This project showcases the power of DevOps principles and modern technologies in automating infrastructure deployment and managing containerized applications. Whether you're a developer, system administrator, or DevOps enthusiast, this project offers valuable insights and a hands-on experience in building, deploying, and managing applications in a cloud-native environment.
+Welcome to the DevOps Project! This project showcases the power of DevOps principles and modern technologies in automating infrastructure deployment and managing containerized applications. Whether you're a developer, system administrator, or DevOps enthusiast, this project offers valuable insights and a hands-on experience in building, deploying, and managing applications in a cloud-native environment.
 
 ## Table of Contents
 - [Video Demo](#video-demo)
@@ -139,12 +139,12 @@ Fork the repository by clicking the "Fork" button on the top right corner of thi
 Clone the forked repository to your local machine using the following command:
 
 ```bash
-git clone https://github.com/<your-username>/Demo-DevOps_project.git
+git clone https://github.com/<your-username>/DevOps_project.git
 ```
 Change the working directory to the cloned repo, then run the Bash script to build the infrastructure:
 
 ```bash
-cd Demo-DevOps_project
+cd DevOps_project
 bash infrastructure.sh
 ```
 
