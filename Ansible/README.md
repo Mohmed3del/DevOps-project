@@ -1,6 +1,6 @@
 # Ansible Automation
 
-This directory contains Ansible playbooks and roles used for automating various tasks in the Demo-DevOps-project. Ansible provides a powerful way to manage configurations and perform repetitive tasks efficiently.
+This directory contains Ansible playbooks and roles used for automating various tasks in the DevOps-project. Ansible provides a powerful way to manage configurations and perform repetitive tasks efficiently.
 
 ## Table of Contents
 
@@ -29,10 +29,10 @@ Before you start using Ansible to automate tasks, ensure you have the following 
 
 ## Getting Started
 
-1. Clone the Demo-DevOps-project repository:
+1. Clone the DevOps-project repository:
 
    ```bash
-   git clone https://github.com/Mohmed3del/Demo-DevOps-project.git
+   git clone https://github.com/Mohmed3del/DevOps-project.git
    ```
 
 ### Installing Ansible using apt package manager in Ubuntu
@@ -82,7 +82,7 @@ The `docker` role contains tasks that install Docker and Docker Compose and conf
 
 ### Trivy Role
 
-The Trivy Role is an integral part of our automation process in the Demo-DevOps-project. It serves the crucial purpose of scanning Docker images for vulnerabilities, ensuring the security of your containerized applications.
+The Trivy Role is an integral part of our automation process in the DevOps-project. It serves the crucial purpose of scanning Docker images for vulnerabilities, ensuring the security of your containerized applications.
 
 #### Purpose
 
@@ -100,7 +100,7 @@ Let's Encrypt is a free, automated, and open certificate authority that provides
 
 ## Playbooks
 
-Playbooks in the Demo-DevOps-project provide an efficient and automated way to manage and orchestrate various tasks within your infrastructure. The primary playbook, `playbook.yml`, is designed to streamline the installation and configuration of multiple roles in one go.
+Playbooks in the DevOps-project provide an efficient and automated way to manage and orchestrate various tasks within your infrastructure. The primary playbook, `playbook.yml`, is designed to streamline the installation and configuration of multiple roles in one go.
 
 ### Install All Roles
 
