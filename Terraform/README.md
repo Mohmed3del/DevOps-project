@@ -1,6 +1,6 @@
-# Demo-DevOps-project - Terraform Infrastructure Deployment
+# DevOps-project - Terraform Infrastructure Deployment
 
-This repository contains the Terraform code for deploying and managing the infrastructure of the Demo-DevOps-project using Infrastructure as Code (IAC) principles.
+This repository contains the Terraform code for deploying and managing the infrastructure of the DevOps-project using Infrastructure as Code (IAC) principles.
 
 ## Table of Contents
 
@@ -21,15 +21,15 @@ Before you start using this Terraform code, make sure you have the following pre
 
 ## Getting Started
 
-1. Clone the Demo-DevOps-project repository:
+1. Clone the DevOps-project repository:
 
    ```bash
-   git clone https://github.com/Mohmed3del/Demo-DevOps-project.git
+   git clone https://github.com/Mohmed3del/DevOps-project.git
    ```
 2. Navigate to the Terraform directory:
 
     ```bash
-    cd Demo-DevOps-project/Terraform
+    cd DevOps-project/Terraform
     ```
 3. Initialize Terraform:
 
@@ -58,7 +58,7 @@ Before you start using this Terraform code, make sure you have the following pre
 
 ## Infrastructure Overview
 
-The Terraform code in this repository is designed to deploy a comprehensive infrastructure for the Demo-DevOps-project. The infrastructure includes various components that work together to support the project's functionality and operations. Below is an overview of the key components that will be deployed:
+The Terraform code in this repository is designed to deploy a comprehensive infrastructure for the DevOps-project. The infrastructure includes various components that work together to support the project's functionality and operations. Below is an overview of the key components that will be deployed:
 
 ### Network Setup
 
@@ -84,7 +84,7 @@ Terraform's state files are stored remotely in an Amazon S3 bucket. This helps m
 
 An Amazon Elastic Kubernetes Service (EKS) cluster is provisioned using the Terraform EKS module. EKS provides managed Kubernetes clusters for deploying, managing, and scaling containerized applications using Kubernetes.
 
-This Terraform setup creates a robust and scalable infrastructure that supports the Demo-DevOps-project's requirements. Each component is carefully configured to ensure security, reliability, and ease of management.
+This Terraform setup creates a robust and scalable infrastructure that supports the DevOps-project's requirements. Each component is carefully configured to ensure security, reliability, and ease of management.
 
 
 ## Diagrams
@@ -160,7 +160,7 @@ When you no longer need the resources created by Terraform, it's important to cl
 
 ## Contributing
 
-Contributions to the Demo-DevOps-project are welcome! Whether you've found a bug, have suggestions for improvement, or want to add new features, your input is valuable. Here's how you can contribute:
+Contributions to the DevOps-project are welcome! Whether you've found a bug, have suggestions for improvement, or want to add new features, your input is valuable. Here's how you can contribute:
 
 ### Reporting Issues
 
