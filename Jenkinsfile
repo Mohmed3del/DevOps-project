@@ -123,8 +123,8 @@ pipeline {
                             }
                         }
                         sh """
-                            echo url="https://www.duckdns.org/update?domains=argo-cd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
-                            echo url="https://www.duckdns.org/update?domains=go-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
+                            echo url="https://www.duckdns.org/update?domains=argocd-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
+                            echo url="https://www.duckdns.org/update?domains=go-app&token=${DUCKDNSTOKEN}&ip=${ip_addr}\" | curl -K -
                             echo url="https://www.duckdns.org/update?domains=prometheus-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
                             echo url="https://www.duckdns.org/update?domains=grafana-devops&token=${DUCKDNSTOKEN}&ip=${ip_addr}" | curl -K -
                             kubectl get ns monitoring || kubectl create ns monitoring
