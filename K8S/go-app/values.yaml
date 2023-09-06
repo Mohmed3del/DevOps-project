@@ -5,8 +5,8 @@ app:
   maxreplicas: 5
   average_utilization: 70
   image:
-    repo_app: 889149267524.dkr.ecr.us-east-1.amazonaws.com/go_app
-    tag_app: 1.0.0-2
+    repo_app: <your_docker_repo>/go_app
+    tag_app: <your_image_tag>
   containerport: "9090"
   serviceport: "80"
   Docker_secret: ecr-secret
@@ -76,7 +76,7 @@ storageclass:
 
 ingress:
   name: go-app-ingress
-  host: go-devops.duckdns.org # Replace with your domain
+  host: go-app.duckdns.org # Replace with your domain
   class: nginx
   secretname: app-tls-secret
 
