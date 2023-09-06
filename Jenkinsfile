@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('Update kube and create docker-secret'){
+        stage('Update kubeconfig and create docker-secret'){
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
@@ -54,7 +54,7 @@ pipeline {
 
             }
         }
-        stage("Update the Deployment Tags") {
+        stage("Update the Image Tags in Helm chart") {
             steps {
 
                 sh """
@@ -65,7 +65,7 @@ pipeline {
             }
         }
 
-        stage("Push the changed deployment file to Git") {
+        stage("Push the changed values in helm chart file to Git") {
             steps {
                 withCredentials([usernamePassword(credentialsId: "github", usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                     sh """
@@ -105,7 +105,7 @@ pipeline {
 
             }
         }
-        stage('get Ip from LB and Update Domains') {
+        stage('Get Ip from LB and Update Domains') {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
