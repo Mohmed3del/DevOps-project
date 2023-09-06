@@ -45,7 +45,7 @@
   command: #"certbot certonly --standalone -d {{ domain_hostname }} --register-unsafely-without-email --agree-tos --force-renewal"
     "certbot --nginx -d {{ domain_hostname }}   --register-unsafely-without-email --agree-tos --force-renewal"
   ignore_errors: true
-  when: cert_stats.stat.exists == True
+  when: cert_stats.stat.exists == False
   # notify:
   #   - restart nginx
 
