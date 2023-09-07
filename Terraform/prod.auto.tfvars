@@ -11,7 +11,7 @@ vpcid    = "10.0.0.0/16"
 
 IPS = "0.0.0.0/0"
 
-#public1_subnet is used for jenkins_server, nexus_server, sonarqube_server and k8s nodes
+#public1_subnet is used for jenkins_server, sonarqube_server and k8s nodes
 public1 = {
   cidr = "10.0.1.0/24"
 }
