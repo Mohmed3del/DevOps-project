@@ -11,7 +11,7 @@ vpcid    = "10.0.0.0/16"
 
 IPS = "0.0.0.0/0"
 
-#public1_subnet is used for jenkins_server, sonarqube_server and k8s nodes
+# public subnet is used for jenkins_server and sonarqube_server 
 public1 = {
   cidr = "10.0.1.0/24"
 }
@@ -19,7 +19,7 @@ public1 = {
 public2 = {
   cidr = "10.0.2.0/24"
 }
-
+# private subnets are used for EKS nodes 
 private1 = {
   cidr = "10.0.3.0/24"
 }
