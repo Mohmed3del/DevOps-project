@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     GITURL= "github.com/Mohmed3del/DevOps-project.git"
-    GITEMAIL = "mohmed.adel.188.2017@gmail.com"
+    GITEMAIL = "<your-email>"
     AC_ID = credentials("AC_ID")
     DUCKDNSTOKEN = credentials("duckdnstoken")
     GITBRANCH = "K8S_argoCD"
