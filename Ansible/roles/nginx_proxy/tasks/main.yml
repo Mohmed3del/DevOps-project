@@ -38,7 +38,7 @@
 
 - name: check if we have generated a cert already
   stat:
-    path: "/etc/letsencrypt/live/{{ domain_hostname }}*/fullchain.pem"
+    path: "/etc/letsencrypt/live/{{ domain_hostname }}/fullchain.pem"
   register: cert_stats
 
 - name: run certbot to generate the certificates
