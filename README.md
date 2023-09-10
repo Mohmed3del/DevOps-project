@@ -123,7 +123,7 @@ Additionally, we recommend adhering to these vital steps before launching the Ba
 
 1. Domain Name Customization: Personalize the domain names within the Terraform configurations to align with your specific requirements.
 
-2. Token Exportation: Export the token essential for your DNS provider (e.g., DuckDNS) as an environment variable using the command `export TF_duckdnstoken=<your token in DuckDNS account>`.
+2. Token Exportation: Export the token essential for your DNS provider (e.g., DuckDNS) as an environment variable using the command `export TF_VAR_duckdnstoken=<your token in DuckDNS account>`.
 
 3. Configuration Verification: Ensure meticulous configuration of variables or settings, with special attention to Let's Encrypt certificate generation within Ansible.
 
