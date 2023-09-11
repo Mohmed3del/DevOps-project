@@ -97,4 +97,4 @@ I test Docker Compose on EC2
 
 Please note that these instructions provide a high-level overview. Adjust the steps and details based on your specific environment and requirements.
 
-Feel free to use this updated content in your project's `README.md` file.
+<!-- Feel free to use this updated content in your project's `README.md` file. -->
